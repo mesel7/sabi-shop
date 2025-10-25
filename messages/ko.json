@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "shop": "SHOP",
+    "about": "ABOUT",
+    "notice": "NOTICE",
+    "contact": "CONTACT",
+    "cart": "장바구니"
+  },
+  "home": { "title": "Sabi Shop" },
+  "checkout": {
+    "title": "결제하기",
+    "orderer": "주문자 정보",
+    "shipping": "배송 정보",
+    "placeOrder": "결제하기"
+  },
+  "common": { "items": "{count}개" }
+}

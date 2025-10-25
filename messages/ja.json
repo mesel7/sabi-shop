@@ -1,0 +1,17 @@
+{
+  "nav": {
+    "shop": "SHOP",
+    "about": "ABOUT",
+    "notice": "NOTICE",
+    "contact": "CONTACT",
+    "cart": "カート"
+  },
+  "home": { "title": "Sabi Shop" },
+  "checkout": {
+    "title": "決済",
+    "orderer": "注文者情報",
+    "shipping": "配送情報",
+    "placeOrder": "支払う"
+  },
+  "common": { "items": "{count}個" }
+}
