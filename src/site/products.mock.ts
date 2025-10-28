@@ -1,0 +1,40 @@
+import type { Product } from "@/types";
+
+export const PRODUCTS: Product[] = [
+  {
+    id: "p-1001",
+    title_ko: "시그니처 원두",
+    title_ja: "シグネチャーコーヒー豆",
+    description_ko: "밸런스 좋은 데일리 블렌드",
+    description_ja: "バランスの良いデイリーブレンド",
+    price: 25000,
+    category: "beans",
+    imageUrl: "/beans.jpg",
+    isActive: true,
+    createdAt: 1730000000000,
+  },
+  {
+    id: "p-1002",
+    title_ko: "글라스 컵",
+    title_ja: "グラスカップ",
+    description_ko: "심플한 로고 컵",
+    description_ja: "シンプルなロゴカップ",
+    price: 18000,
+    category: "goods",
+    imageUrl: "/glass.jpg",
+    isActive: true,
+    createdAt: 1730000100000,
+  },
+  {
+    id: "p-1003",
+    title_ko: "오리지널 원두",
+    title_ja: "オリジナル豆",
+    description_ko: "견과류 향미",
+    description_ja: "ナッツのフレーバー",
+    price: 18500,
+    category: "beans",
+    imageUrl: "/beans2.jpg",
+    isActive: true,
+    createdAt: 1730000200000,
+  },
+];
