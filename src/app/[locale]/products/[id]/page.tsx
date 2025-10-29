@@ -1,15 +1,14 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/site/products.mock";
-import { formatCurrency } from "@/lib/format";
+import ProductDetailClient from "./ProductDetailClient";
 
 type Props = {
   params: Promise<{ locale: "ko" | "ja"; id: string }>;
 };
 
 export default async function ProductDetail({ params }: Props) {
-  const { id, locale } = await params;
-
+  const { id, locale } = await params; // 서버에서 Promise 해제
   const p = PRODUCTS.find((x) => x.id === id && x.isActive);
   if (!p) notFound();
 
@@ -28,28 +27,19 @@ export default async function ProductDetail({ params }: Props) {
           />
         </div>
 
-        <div>
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="mt-2 text-gray-600">
-            {formatCurrency(locale, p.price)}
-          </p>
-          {desc && <p className="mt-4 text-gray-500">{desc}</p>}
-
-          <div className="mt-6 flex gap-3">
-            <button className="px-4 py-2 rounded border hover:border-black">
-              장바구니 / カートに入れる
-            </button>
-            <button className="px-4 py-2 rounded bg-black text-white">
-              바로구매 / 購入する
-            </button>
-          </div>
-        </div>
+        {/* 클라이언트 컴포넌트에 값만 전달 */}
+        <ProductDetailClient
+          locale={locale}
+          p={{ id: p.id, price: p.price, imageUrl: p.imageUrl }}
+          title={title}
+          desc={desc}
+        />
       </div>
 
       <hr className="my-10" />
       <div className="prose max-w-none text-sm text-gray-700">
         <h2 className="text-base font-semibold mb-2">상세정보 / 詳細</h2>
-        <p>{desc ?? "상품 상세 설명이 준비 중입니다。"} </p>
+        <p>{desc ?? "상품 상세 설명이 준비 중입니다。"}</p>
       </div>
     </section>
   );
