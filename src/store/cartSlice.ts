@@ -7,37 +7,62 @@ export type CartItem = {
   qty: number;
   imageUrl?: string;
 };
-type State = { items: CartItem[]; subtotal: number };
 
-const initial: State = { items: [], subtotal: 0 };
-const calc = (items: CartItem[]) =>
-  items.reduce((s, i) => s + i.price * i.qty, 0);
+export interface CartState {
+  items: CartItem[];
+  subtotal: number;
+}
 
-const slice = createSlice({
+const STORAGE_KEY = "sabi_cart";
+
+// localStorage에서 장바구니 불러오기
+export const loadCartFromStorage = (): CartState => {
+  if (typeof window === "undefined") {
+    return { items: [], subtotal: 0 };
+  }
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { items: [], subtotal: 0 };
+    const parsed = JSON.parse(raw) as CartState;
+    // 혹시 subtotal이 없거나 오류난 경우 보정
+    const subtotal = parsed.items.reduce((sum, i) => sum + i.price * i.qty, 0);
+    return { items: parsed.items, subtotal };
+  } catch (err) {
+    console.warn("Failed to load cart:", err);
+    return { items: [], subtotal: 0 };
+  }
+};
+
+const initialState: CartState = { items: [], subtotal: 0 };
+
+const cartSlice = createSlice({
   name: "cart",
-  initialState: initial,
+  initialState,
   reducers: {
-    addItem(state, { payload }: PayloadAction<CartItem>) {
-      const it = state.items.find((i) => i.id === payload.id);
-      if (it) it.qty += payload.qty;
-      else state.items.push(payload);
-      state.subtotal = calc(state.items);
+    addItem: (state, action: PayloadAction<CartItem>) => {
+      const existing = state.items.find((i) => i.id === action.payload.id);
+      if (existing) {
+        existing.qty += action.payload.qty;
+      } else {
+        state.items.push(action.payload);
+      }
+      state.subtotal = state.items.reduce((sum, i) => sum + i.price * i.qty, 0);
     },
-    updateQty(state, { payload }: PayloadAction<{ id: string; qty: number }>) {
-      const it = state.items.find((i) => i.id === payload.id);
-      if (it) it.qty = payload.qty;
-      state.subtotal = calc(state.items);
+    removeItem: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter((i) => i.id !== action.payload);
+      state.subtotal = state.items.reduce((sum, i) => sum + i.price * i.qty, 0);
     },
-    removeItem(state, { payload }: PayloadAction<string>) {
-      state.items = state.items.filter((i) => i.id !== payload);
-      state.subtotal = calc(state.items);
+    updateQty: (state, action: PayloadAction<{ id: string; qty: number }>) => {
+      const item = state.items.find((i) => i.id === action.payload.id);
+      if (item) item.qty = action.payload.qty;
+      state.subtotal = state.items.reduce((sum, i) => sum + i.price * i.qty, 0);
     },
-    clear(state) {
+    clearCart: (state) => {
       state.items = [];
       state.subtotal = 0;
     },
   },
 });
 
-export const { addItem, updateQty, removeItem, clear } = slice.actions;
-export default slice.reducer;
+export const { addItem, removeItem, updateQty, clearCart } = cartSlice.actions;
+export default cartSlice.reducer;

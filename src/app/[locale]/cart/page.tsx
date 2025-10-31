@@ -2,10 +2,11 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { updateQty, removeItem, clear } from "@/store/cartSlice";
+import { updateQty, removeItem, clearCart } from "@/store/cartSlice";
 import { formatCurrency, SHIPPING_FEE } from "@/lib/format";
 import { useLocale } from "next-intl";
 import Link from "next/link";
+import { useIsClient } from "@/hooks/useIsClient";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -13,6 +14,13 @@ export default function CartPage() {
   const { items, subtotal } = useSelector((s: RootState) => s.cart);
   const shipping = SHIPPING_FEE[locale];
   const total = subtotal + shipping;
+
+  const isClient = useIsClient();
+
+  if (!isClient) {
+    // 서버 렌더 단계에서는 아무 것도 안 그림 (Hydration mismatch 방지)
+    return <div className="p-8 text-gray-400">로딩중...</div>;
+  }
 
   if (items.length === 0) {
     return (
@@ -89,7 +97,7 @@ export default function CartPage() {
       {/* 버튼 */}
       <div className="mt-8 flex justify-end gap-3">
         <button
-          onClick={() => dispatch(clear())}
+          onClick={() => dispatch(clearCart())}
           className="px-4 py-2 border rounded hover:border-black"
         >
           비우기 / クリア

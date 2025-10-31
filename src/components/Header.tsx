@@ -8,6 +8,7 @@ import { RootState } from "@/store";
 import { useAuth } from "./AuthProvider";
 import { useState } from "react";
 import AuthModal from "./AuthModal";
+import { useIsClient } from "@/hooks/useIsClient";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -18,6 +19,7 @@ export default function Header() {
 
   const { user, logout } = useAuth();
   const [showAuth, setShowAuth] = useState<null | "login" | "signup">(null);
+  const isClient = useIsClient();
 
   return (
     <header className="border-b">
@@ -32,9 +34,9 @@ export default function Header() {
             </Link>
           ))}
           {/* 장바구니 */}
-          <Link href={`/${locale}/cart`} className="text-sm">
-            {t("cart")}{" "}
-            {count > 0 && (
+          <Link href={`/${locale}/cart`} className="text-sm flex items-center">
+            {t("cart")}
+            {isClient && count > 0 && (
               <span className="ml-1 text-xs rounded bg-black text-white px-1.5">
                 {count}
               </span>
