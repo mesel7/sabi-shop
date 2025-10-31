@@ -5,6 +5,9 @@ import { mainMenu } from "@/site/menu.config";
 import LocaleSwitcher from "./LocaleSwitcher";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useAuth } from "./AuthProvider";
+import { useState } from "react";
+import AuthModal from "./AuthModal";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -12,6 +15,9 @@ export default function Header() {
   const count = useSelector((s: RootState) =>
     s.cart.items.reduce((n, i) => n + i.qty, 0)
   );
+
+  const { user, logout } = useAuth();
+  const [showAuth, setShowAuth] = useState<null | "login" | "signup">(null);
 
   return (
     <header className="border-b">
@@ -25,6 +31,7 @@ export default function Header() {
               {t(m.id as any)}
             </Link>
           ))}
+          {/* 장바구니 */}
           <Link href={`/${locale}/cart`} className="text-sm">
             {t("cart")}{" "}
             {count > 0 && (
@@ -33,9 +40,32 @@ export default function Header() {
               </span>
             )}
           </Link>
+
+          {/* 로그인 / 프로필 */}
+          {user ? (
+            <>
+              <Link href={`/${locale}/account/orders`} className="text-sm">
+                내 주문
+              </Link>
+              <button onClick={logout} className="text-sm text-gray-500">
+                로그아웃
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => setShowAuth("login")}
+              className="text-sm text-gray-500"
+            >
+              로그인
+            </button>
+          )}
+
           <LocaleSwitcher />
         </nav>
       </div>
+      {showAuth && (
+        <AuthModal mode={showAuth} onClose={() => setShowAuth(null)} />
+      )}
     </header>
   );
 }

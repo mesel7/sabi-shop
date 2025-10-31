@@ -4,9 +4,34 @@ import Link from "next/link";
 import { useLocale } from "next-intl";
 import { formatCurrency, formatDateTime } from "@/lib/format";
 import { MOCK_ORDERS } from "@/site/orders.mock";
+import { useAuth } from "@/components/AuthProvider";
+import { useState } from "react";
+import AuthModal from "@/components/AuthModal";
 
 export default function MyOrdersPage() {
+  const { user, loading } = useAuth();
+  const [showAuth, setShowAuth] = useState(false);
   const locale = useLocale() as "ko" | "ja";
+
+  if (loading) return <div className="p-10">로딩중...</div>;
+
+  if (!user)
+    return (
+      <>
+        <section className="max-w-4xl mx-auto px-4 py-10 text-center">
+          <p className="mb-4">주문 내역은 로그인 후 확인할 수 있습니다.</p>
+          <button
+            onClick={() => setShowAuth(true)}
+            className="px-4 py-2 bg-black text-white rounded"
+          >
+            로그인하기
+          </button>
+        </section>
+        {showAuth && (
+          <AuthModal mode="login" onClose={() => setShowAuth(false)} />
+        )}
+      </>
+    );
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10">
