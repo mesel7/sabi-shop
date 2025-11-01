@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
+import { useTranslations } from "next-intl";
 
 type Props = {
   mode: "login" | "signup";
@@ -10,6 +11,8 @@ type Props = {
 
 export default function AuthModal({ mode: initialMode, onClose }: Props) {
   const { login, signup } = useAuth();
+  const tAuth = useTranslations("auth");
+
   const [mode, setMode] = useState<"login" | "signup">(initialMode);
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
@@ -17,12 +20,13 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const title = mode === "login" ? "로그인" : "회원가입";
+  const title = mode === "login" ? tAuth("login") : tAuth("signup");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setSubmitting(true);
+
     try {
       if (mode === "login") {
         await login(email, pw);
@@ -31,11 +35,22 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
         await signup(email, pw, name);
         onClose();
       }
-    } catch (err: any) {
-      setError(err.message ?? "실패했습니다.");
+    } catch (err) {
+      // 로그인 오류, 회원가입 오류
+      setError(
+        mode === "login" ? tAuth("invalidCredential") : tAuth("errorGeneric")
+      );
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const resetForm = (nextMode: "login" | "signup") => {
+    setMode(nextMode);
+    setEmail("");
+    setPw("");
+    setName("");
+    setError("");
   };
 
   return (
@@ -52,41 +67,45 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
           <h2 className="text-xl font-bold mb-6">{title}</h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 회원가입일 때만 이름 */}
             {mode === "signup" && (
               <div>
-                <label className="block text-sm mb-1">이름</label>
+                <label className="block text-sm mb-1">{tAuth("name")}</label>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full border rounded px-3 py-2"
-                  placeholder="이름을 입력하세요"
+                  placeholder={tAuth("placeholderName")}
                   required
+                  autoComplete="name"
                 />
               </div>
             )}
 
             <div>
-              <label className="block text-sm mb-1">이메일</label>
+              <label className="block text-sm mb-1">{tAuth("email")}</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full border rounded px-3 py-2"
-                placeholder="you@example.com"
+                placeholder={tAuth("placeholderEmail")}
                 required
+                autoComplete="email"
               />
             </div>
 
             <div>
-              <label className="block text-sm mb-1">비밀번호</label>
+              <label className="block text-sm mb-1">{tAuth("password")}</label>
               <input
                 type="password"
                 value={pw}
                 onChange={(e) => setPw(e.target.value)}
                 className="w-full border rounded px-3 py-2"
-                placeholder="6자 이상"
+                placeholder={tAuth("placeholderPassword")}
                 required
+                autoComplete={
+                  mode === "login" ? "current-password" : "new-password"
+                }
               />
             </div>
 
@@ -97,29 +116,29 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
               disabled={submitting}
               className="w-full bg-black text-white py-2 rounded hover:bg-gray-900 disabled:opacity-60"
             >
-              {submitting ? "처리 중..." : title}
+              {submitting ? tAuth("processing") : title}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">
             {mode === "login" ? (
               <>
-                아직 계정이 없나요?{" "}
+                {tAuth("noAccount")}{" "}
                 <button
-                  onClick={() => setMode("signup")}
+                  onClick={() => resetForm("signup")}
                   className="underline text-black"
                 >
-                  회원가입
+                  {tAuth("switchToSignup")}
                 </button>
               </>
             ) : (
               <>
-                이미 계정이 있나요?{" "}
+                {tAuth("haveAccount")}{" "}
                 <button
-                  onClick={() => setMode("login")}
+                  onClick={() => resetForm("login")}
                   className="underline text-black"
                 >
-                  로그인
+                  {tAuth("switchToLogin")}
                 </button>
               </>
             )}

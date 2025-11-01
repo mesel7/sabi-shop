@@ -1,5 +1,6 @@
 import ProductCard from "@/components/ProductCard";
 import { PRODUCTS } from "@/site/products.mock";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: "ko" | "ja" }>;
@@ -10,9 +11,11 @@ export default async function ProductsPage({ params, searchParams }: Props) {
   const { locale } = await params;
   const { sort: sortParam } = await searchParams;
 
+  const tProducts = await getTranslations({ locale, namespace: "products" });
+
   const sort = (sortParam ?? "new") as "new" | "price_asc" | "price_desc";
 
-  // 단순 정렬
+  // 상품 정렬 로직
   let list = PRODUCTS.filter((p) => p.isActive);
   list = [...list].sort((a, b) => {
     if (sort === "price_asc") return a.price - b.price;
@@ -32,7 +35,7 @@ export default async function ProductsPage({ params, searchParams }: Props) {
               : "hover:border-black"
           }`}
         >
-          신상품 / 新着
+          {tProducts("sortNew")}
         </a>
         <a
           href={`/${locale}/products?sort=price_asc`}
@@ -42,7 +45,7 @@ export default async function ProductsPage({ params, searchParams }: Props) {
               : "hover:border-black"
           }`}
         >
-          가격↑ / 価格↑
+          {tProducts("sortPriceAsc")}
         </a>
         <a
           href={`/${locale}/products?sort=price_desc`}
@@ -52,13 +55,15 @@ export default async function ProductsPage({ params, searchParams }: Props) {
               : "hover:border-black"
           }`}
         >
-          가격↓ / 価格↓
+          {tProducts("sortPriceDesc")}
         </a>
       </div>
 
-      {/* 상품 리스트 */}
+      {/* 상품 목록 */}
       {list.length === 0 ? (
-        <div className="text-center text-gray-500 py-20">No products</div>
+        <div className="text-center text-gray-500 py-20">
+          {tProducts("empty")}
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {list.map((p) => (

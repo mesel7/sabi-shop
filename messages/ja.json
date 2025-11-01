@@ -1,17 +1,114 @@
 {
   "nav": {
     "shop": "SHOP",
-    "about": "ABOUT",
-    "notice": "NOTICE",
-    "contact": "CONTACT",
     "cart": "カート"
   },
-  "home": { "title": "Sabi Shop" },
-  "checkout": {
-    "title": "決済",
-    "orderer": "注文者情報",
-    "shipping": "配送情報",
-    "placeOrder": "支払う"
+  "header": {
+    "login": "ログイン",
+    "logout": "ログアウト",
+    "myOrders": "注文履歴"
   },
-  "common": { "items": "{count}個" }
+  "common": {
+    "items": "{count}点",
+    "loading": "読み込み中です…",
+    "notFound": "データが見つかりませんでした。",
+    "home": "ホームへ",
+    "needLogin": "ログインするとご利用いただけます。",
+    "seeDetail": "詳細を見る"
+  },
+  "home": {
+    "title": "Sabi Shop"
+  },
+  "auth": {
+    "login": "ログイン",
+    "signup": "新規登録",
+    "name": "お名前",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "placeholderName": "お名前を入力してください",
+    "placeholderEmail": "you@example.com",
+    "placeholderPassword": "6文字以上で入力してください",
+    "processing": "処理中です…",
+    "noAccount": "まだアカウントをお持ちではありませんか？",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "switchToSignup": "新規登録へ",
+    "switchToLogin": "ログインへ",
+    "errorGeneric": "エラーが発生しました。しばらくしてから再試行してください。",
+    "invalidCredential": "メールアドレスまたはパスワードが正しくありません。"
+  },
+  "products": {
+    "title": "商品一覧",
+    "sortNew": "新着",
+    "sortPriceAsc": "価格が安い順",
+    "sortPriceDesc": "価格が高い順",
+    "empty": "商品がありません。"
+  },
+  "cart": {
+    "title": "カート",
+    "empty": "カートには商品がありません 🛒",
+    "goShop": "商品一覧へ",
+    "subtotal": "商品合計",
+    "shipping": "送料",
+    "total": "お支払い金額",
+    "clear": "カートを空にする",
+    "checkout": "注文する"
+  },
+  "productDetail": {
+    "addToCart": "カートに入れる",
+    "buyNow": "今すぐ購入",
+    "detailTitle": "詳細",
+    "emptyDescription": "商品の詳細説明は準備中です。",
+    "addedToCart": "カートに追加しました。"
+  },
+  "checkout": {
+    "title": "お支払い",
+    "orderer": "ご注文者情報",
+    "shipping": "配送先情報",
+    "placeOrder": "注文を確定する",
+    "name": "お名前",
+    "phone": "連絡先",
+    "address": "住所",
+    "agree": "利用規約と個人情報の取扱いに同意します。",
+    "errorAgree": "規約に同意してください。",
+    "errorEmptyCart": "カートが空です。",
+    "summary": "ご注文内容",
+    "products": "商品金額",
+    "delivery": "送料",
+    "total": "お支払い金額",
+    "processing": "処理中です…",
+    "needLogin": "ご注文にはログインが必要です。"
+  },
+  "orders": {
+    "title": "注文履歴",
+    "empty": "注文はありません。",
+    "number": "注文番号",
+    "status": "ステータス",
+    "total": "合計金額",
+    "viewDetail": "詳細を見る",
+    "loading": "読み込み中です…",
+    "needLogin": "ログインすると注文履歴を確認できます。"
+  },
+  "orderDetail": {
+    "title": "注文詳細",
+    "orderId": "注文番号",
+    "createdAt": "注文日時",
+    "status": "ステータス",
+    "items": "商品",
+    "products": "商品金額",
+    "shipping": "送料",
+    "total": "合計",
+    "defaultStatus": "支払い済み",
+    "needLogin": "ログインするとご利用いただけます。",
+    "noPermission": "この注文へのアクセス権限がありません。",
+    "notFound": "該当する注文が見つかりませんでした。",
+    "toHome": "ホームへ",
+    "toOrders": "注文履歴へ"
+  },
+  "orderSuccess": {
+    "title": "ご注文が完了しました",
+    "desc": "ご注文を受け付けました。",
+    "orderId": "注文番号",
+    "toHome": "ホームへ",
+    "toOrders": "注文履歴を見る"
+  }
 }

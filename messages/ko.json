@@ -1,17 +1,114 @@
 {
   "nav": {
     "shop": "SHOP",
-    "about": "ABOUT",
-    "notice": "NOTICE",
-    "contact": "CONTACT",
     "cart": "장바구니"
   },
-  "home": { "title": "Sabi Shop" },
+  "header": {
+    "login": "로그인",
+    "logout": "로그아웃",
+    "myOrders": "내 주문"
+  },
+  "common": {
+    "items": "{count}개",
+    "loading": "로딩중...",
+    "notFound": "데이터를 찾을 수 없습니다.",
+    "home": "홈으로",
+    "needLogin": "로그인 후 이용하실 수 있습니다.",
+    "seeDetail": "자세히 보기"
+  },
+  "home": {
+    "title": "Sabi Shop"
+  },
+  "auth": {
+    "login": "로그인",
+    "signup": "회원가입",
+    "name": "이름",
+    "email": "이메일",
+    "password": "비밀번호",
+    "placeholderName": "이름을 입력하세요",
+    "placeholderEmail": "you@example.com",
+    "placeholderPassword": "6자 이상",
+    "processing": "처리 중...",
+    "noAccount": "아직 계정이 없나요?",
+    "haveAccount": "이미 계정이 있나요?",
+    "switchToSignup": "회원가입",
+    "switchToLogin": "로그인",
+    "errorGeneric": "오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+    "invalidCredential": "이메일 또는 비밀번호가 올바르지 않습니다."
+  },
+  "products": {
+    "title": "상품 목록",
+    "sortNew": "신상품",
+    "sortPriceAsc": "가격↑",
+    "sortPriceDesc": "가격↓",
+    "empty": "상품이 없습니다."
+  },
+  "cart": {
+    "title": "장바구니",
+    "empty": "장바구니가 비었습니다 🛒",
+    "goShop": "상품 보러가기",
+    "subtotal": "상품 합계",
+    "shipping": "배송비",
+    "total": "총액",
+    "clear": "비우기",
+    "checkout": "주문하기"
+  },
+  "productDetail": {
+    "addToCart": "장바구니에 담기",
+    "buyNow": "바로 구매",
+    "detailTitle": "상세정보",
+    "emptyDescription": "상품 상세 설명이 준비 중입니다.",
+    "addedToCart": "장바구니에 담았습니다."
+  },
   "checkout": {
     "title": "결제하기",
     "orderer": "주문자 정보",
     "shipping": "배송 정보",
-    "placeOrder": "결제하기"
+    "placeOrder": "결제하기",
+    "name": "주문자 이름",
+    "phone": "연락처",
+    "address": "주소",
+    "agree": "이용약관 및 개인정보 처리에 동의합니다.",
+    "errorAgree": "약관에 동의해주세요.",
+    "errorEmptyCart": "장바구니가 비어 있습니다.",
+    "summary": "주문 요약",
+    "products": "상품금액",
+    "delivery": "배송비",
+    "total": "총 주문금액",
+    "processing": "처리중...",
+    "needLogin": "주문하려면 로그인해주세요."
   },
-  "common": { "items": "{count}개" }
+  "orders": {
+    "title": "내 주문",
+    "empty": "주문이 없습니다.",
+    "number": "주문번호",
+    "status": "상태",
+    "total": "총액",
+    "viewDetail": "상세보기",
+    "loading": "불러오는 중...",
+    "needLogin": "로그인 후 주문 내역을 확인할 수 있습니다."
+  },
+  "orderDetail": {
+    "title": "주문 상세",
+    "orderId": "주문번호",
+    "createdAt": "주문일시",
+    "status": "상태",
+    "items": "상품",
+    "products": "상품금액",
+    "shipping": "배송비",
+    "total": "총액",
+    "defaultStatus": "결제완료",
+    "needLogin": "로그인 후 주문 내역을 확인할 수 있습니다.",
+    "noPermission": "이 주문에 접근할 권한이 없습니다.",
+    "notFound": "해당 주문을 찾을 수 없습니다.",
+    "toHome": "홈으로",
+    "toOrders": "주문내역"
+  },
+  "orderSuccess": {
+    "title": "주문 완료",
+    "desc": "주문이 성공적으로 접수되었습니다.",
+    "orderId": "주문번호",
+    "toHome": "홈으로",
+    "toOrders": "주문내역 보기"
+  }
 }

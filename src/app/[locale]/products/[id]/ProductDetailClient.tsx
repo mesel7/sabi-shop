@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "@/store/cartSlice";
 import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/lib/format";
+import { useTranslations } from "next-intl";
 
 type Props = {
   locale: "ko" | "ja";
@@ -16,11 +17,19 @@ export default function ProductDetailClient({ locale, p, title, desc }: Props) {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const tProductDetail = useTranslations("productDetail");
+
   const handleAddCart = () => {
     dispatch(
-      addItem({ id: p.id, title, price: p.price, qty: 1, imageUrl: p.imageUrl })
+      addItem({
+        id: p.id,
+        title,
+        price: p.price,
+        qty: 1,
+        imageUrl: p.imageUrl,
+      })
     );
-    alert("장바구니에 담겼습니다 🛒");
+    alert(tProductDetail("addedToCart"));
   };
 
   const handleBuyNow = () => {
@@ -39,13 +48,13 @@ export default function ProductDetailClient({ locale, p, title, desc }: Props) {
           onClick={handleAddCart}
           className="px-4 py-2 rounded border hover:border-black"
         >
-          장바구니 / カートに入れる
+          {tProductDetail("addToCart")}
         </button>
         <button
           onClick={handleBuyNow}
           className="px-4 py-2 rounded bg-black text-white"
         >
-          바로구매 / 購入する
+          {tProductDetail("buyNow")}
         </button>
       </div>
     </div>

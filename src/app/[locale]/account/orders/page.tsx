@@ -3,7 +3,7 @@
 import { useAuth } from "@/components/AuthProvider";
 import { useEffect, useState } from "react";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
 
@@ -18,6 +18,10 @@ type OrderDoc = {
 export default function MyOrdersPage() {
   const { user, loading } = useAuth();
   const locale = useLocale() as "ko" | "ja";
+
+  const tOrders = useTranslations("orders");
+  const tCommon = useTranslations("common");
+
   const [orders, setOrders] = useState<OrderDoc[]>([]);
   const [fetching, setFetching] = useState(false);
 
@@ -49,25 +53,28 @@ export default function MyOrdersPage() {
     fetchOrders();
   }, [user]);
 
-  if (loading) return <div className="p-8">로딩중...</div>;
-  if (!user)
-    return <div className="p-8">로그인 후 주문 내역을 확인할 수 있습니다.</div>;
+  if (loading) return <div className="p-8">{tCommon("loading")}</div>;
+  if (!user) return <div className="p-8">{tOrders("needLogin")}</div>;
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">내 주문</h1>
+      <h1 className="text-2xl font-bold mb-4">{tOrders("title")}</h1>
       {fetching ? (
-        <div>불러오는 중...</div>
+        <div>{tOrders("loading")}</div>
       ) : orders.length === 0 ? (
-        <div>주문이 없습니다.</div>
+        <div>{tOrders("empty")}</div>
       ) : (
         orders.map((o) => (
           <div key={o.id} className="border rounded p-4 flex justify-between">
             <div>
-              <p className="font-semibold">주문번호: {o.id}</p>
+              <p className="font-semibold">
+                {tOrders("number")}: {o.id}
+              </p>
               <p className="text-sm text-gray-500">
                 {o.createdAt
-                  ? new Date(o.createdAt).toLocaleString("ko-KR")
+                  ? new Date(o.createdAt).toLocaleString(
+                      locale === "ko" ? "ko-KR" : "ja-JP"
+                    )
                   : "-"}
               </p>
               <ul className="mt-2 text-sm text-gray-700">
@@ -78,7 +85,7 @@ export default function MyOrdersPage() {
                 ))}
               </ul>
               <p className="mt-2 font-semibold">
-                총액: {o.total?.toLocaleString()}원
+                {tOrders("total")}: {o.total?.toLocaleString()}원
               </p>
             </div>
             <div className="flex flex-col gap-2 items-end">
@@ -89,7 +96,7 @@ export default function MyOrdersPage() {
                 href={`/${locale}/order/${o.id}`}
                 className="text-xs underline text-gray-500"
               >
-                상세보기
+                {tCommon("seeDetail")}
               </Link>
             </div>
           </div>

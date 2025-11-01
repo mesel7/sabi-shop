@@ -2,13 +2,20 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PRODUCTS } from "@/site/products.mock";
 import ProductDetailClient from "./ProductDetailClient";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: "ko" | "ja"; id: string }>;
 };
 
 export default async function ProductDetail({ params }: Props) {
-  const { id, locale } = await params; // 서버에서 Promise 해제
+  const { id, locale } = await params;
+
+  const tProductDetail = await getTranslations({
+    locale,
+    namespace: "productDetail",
+  });
+
   const p = PRODUCTS.find((x) => x.id === id && x.isActive);
   if (!p) notFound();
 
@@ -27,7 +34,6 @@ export default async function ProductDetail({ params }: Props) {
           />
         </div>
 
-        {/* 클라이언트 컴포넌트에 값만 전달 */}
         <ProductDetailClient
           locale={locale}
           p={{ id: p.id, price: p.price, imageUrl: p.imageUrl }}
@@ -38,8 +44,10 @@ export default async function ProductDetail({ params }: Props) {
 
       <hr className="my-10" />
       <div className="prose max-w-none text-sm text-gray-700">
-        <h2 className="text-base font-semibold mb-2">상세정보 / 詳細</h2>
-        <p>{desc ?? "상품 상세 설명이 준비 중입니다。"}</p>
+        <h2 className="text-base font-semibold mb-2">
+          {tProductDetail("detailTitle")}
+        </h2>
+        <p>{desc ?? tProductDetail("emptyDescription")}</p>
       </div>
     </section>
   );

@@ -15,11 +15,14 @@ export default function CheckoutPage() {
   const dispatch = useDispatch();
   const router = useRouter();
   const locale = useLocale() as "ko" | "ja";
-  const t = useTranslations("checkout");
+
+  const tCheckout = useTranslations("checkout");
+  const tCommon = useTranslations("common");
+
   const cart = useSelector((s: RootState) => s.cart);
   const shippingFee = SHIPPING_FEE[locale] ?? 2500;
 
-  // 폼 상태 (필수만)
+  // 폼 상태
   const [name, setName] = useState("");
   const [addr, setAddr] = useState("");
   const [phone, setPhone] = useState("");
@@ -30,7 +33,7 @@ export default function CheckoutPage() {
   if (!user) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-10">
-        주문하려면 로그인해주세요.
+        {tCheckout("needLogin")}
       </div>
     );
   }
@@ -38,11 +41,11 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agree) {
-      setError("약관에 동의해주세요.");
+      setError(tCheckout("errorAgree"));
       return;
     }
     if (cart.items.length === 0) {
-      setError("장바구니가 비어 있습니다.");
+      setError(tCheckout("errorEmptyCart"));
       return;
     }
 
@@ -74,7 +77,7 @@ export default function CheckoutPage() {
       router.push(`/${locale}/order/success?id=${orderId}`);
     } catch (err: any) {
       console.error(err);
-      setError("주문 중 오류가 발생했습니다.");
+      setError(tCommon("notFound"));
     } finally {
       setSubmitting(false);
     }
@@ -82,12 +85,12 @@ export default function CheckoutPage() {
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-6">결제하기</h1>
+      <h1 className="text-2xl font-bold mb-6">{tCheckout("title")}</h1>
 
       <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-4">
           <div>
-            <label className="block text-sm mb-1">주문자 이름</label>
+            <label className="block text-sm mb-1">{tCheckout("name")}</label>
             <input
               className="w-full border rounded px-3 py-2"
               value={name}
@@ -96,7 +99,7 @@ export default function CheckoutPage() {
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">연락처</label>
+            <label className="block text-sm mb-1">{tCheckout("phone")}</label>
             <input
               className="w-full border rounded px-3 py-2"
               value={phone}
@@ -105,7 +108,7 @@ export default function CheckoutPage() {
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">주소</label>
+            <label className="block text-sm mb-1">{tCheckout("address")}</label>
             <input
               className="w-full border rounded px-3 py-2"
               value={addr}
@@ -119,7 +122,7 @@ export default function CheckoutPage() {
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
             />
-            이용약관 및 개인정보 처리에 동의합니다.
+            {tCheckout("agree")}
           </label>
 
           {error && <p className="text-sm text-red-500">{error}</p>}
@@ -129,24 +132,23 @@ export default function CheckoutPage() {
             disabled={submitting}
             className="px-4 py-2 bg-black text-white rounded disabled:opacity-60"
           >
-            {submitting ? "처리중..." : "결제하기"}
+            {submitting ? tCommon("loading") : tCheckout("placeOrder")}
           </button>
         </div>
 
-        {/* 오른쪽 주문 요약 */}
         <div className="border rounded p-4 space-y-2 bg-gray-50">
-          <h2 className="font-semibold mb-2">주문 요약</h2>
+          <h2 className="font-semibold mb-2">{tCheckout("summary")}</h2>
           <div className="flex justify-between text-sm">
-            <span>상품금액</span>
+            <span>{tCheckout("products")}</span>
             <span>{cart.subtotal.toLocaleString()}원</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span>배송비</span>
+            <span>{tCheckout("delivery")}</span>
             <span>{shippingFee.toLocaleString()}원</span>
           </div>
           <hr />
           <div className="flex justify-between font-semibold">
-            <span>총 주문금액</span>
+            <span>{tCheckout("total")}</span>
             <span>{(cart.subtotal + shippingFee).toLocaleString()}원</span>
           </div>
         </div>

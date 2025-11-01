@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
 import { mainMenu } from "@/site/menu.config";
@@ -11,7 +12,9 @@ import AuthModal from "./AuthModal";
 import { useIsClient } from "@/hooks/useIsClient";
 
 export default function Header() {
-  const t = useTranslations("nav");
+  const tNav = useTranslations("nav");
+  const tHeader = useTranslations("header");
+
   const locale = useLocale();
   const count = useSelector((s: RootState) =>
     s.cart.items.reduce((n, i) => n + i.qty, 0)
@@ -30,12 +33,13 @@ export default function Header() {
         <nav className="flex items-center gap-6">
           {mainMenu.map((m) => (
             <Link key={m.id} href={`/${locale}${m.path}`} className="text-sm">
-              {t(m.id as any)}
+              {tNav(m.id as any)}
             </Link>
           ))}
+
           {/* 장바구니 */}
           <Link href={`/${locale}/cart`} className="text-sm flex items-center">
-            {t("cart")}
+            {tNav("cart")}
             {isClient && count > 0 && (
               <span className="ml-1 text-xs rounded bg-black text-white px-1.5">
                 {count}
@@ -43,14 +47,17 @@ export default function Header() {
             )}
           </Link>
 
-          {/* 로그인 / 프로필 */}
+          {/* 로그인 / 내 주문 / 로그아웃 */}
           {user ? (
             <>
               <Link href={`/${locale}/account/orders`} className="text-sm">
-                내 주문
+                {tHeader("myOrders")}
               </Link>
-              <button onClick={logout} className="text-sm text-gray-500">
-                로그아웃
+              <button
+                onClick={logout}
+                className="text-sm text-gray-500 whitespace-nowrap"
+              >
+                {tHeader("logout")}
               </button>
             </>
           ) : (
@@ -58,13 +65,14 @@ export default function Header() {
               onClick={() => setShowAuth("login")}
               className="text-sm text-gray-500"
             >
-              로그인
+              {tHeader("login")}
             </button>
           )}
 
           <LocaleSwitcher />
         </nav>
       </div>
+
       {showAuth && (
         <AuthModal mode={showAuth} onClose={() => setShowAuth(null)} />
       )}
