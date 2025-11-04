@@ -2,6 +2,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import Providers from "@/components/Providers";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 type Props = {
   children: React.ReactNode;
@@ -20,10 +21,9 @@ export default async function LocaleLayout({ children, params }: Props) {
       <Providers>
         <div className="min-h-dvh flex flex-col">
           <Header />
-          <main className="flex-1">{children}</main>
-          <footer className="border-t text-sm text-gray-500 py-8">
-            <div className="max-w-7xl mx-auto px-4">© Sabi Shop</div>
-          </footer>
+          {/* 헤더가 fixed이니까 그 높이(64px)만큼 여백 확보 */}
+          <main className="flex-1 pt-16">{children}</main>
+          <Footer />
         </div>
       </Providers>
     </NextIntlClientProvider>

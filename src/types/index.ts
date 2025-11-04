@@ -5,7 +5,14 @@ export type Product = {
   description_ko?: string;
   description_ja?: string;
   price: number;
-  category: "beans" | "gear" | "goods";
+  category:
+    | "beans"
+    | "drip"
+    | "goods"
+    | "tumbler"
+    | "capsule"
+    | "seasonal"
+    | "gift";
   imageUrl: string;
   isActive: boolean;
   createdAt: number; // epoch

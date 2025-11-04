@@ -115,52 +115,55 @@ export default function OrderDetailPage() {
 
   return (
     <section className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-6">{tOrderDetail("title")}</h1>
+      <h1 className="text-2xl font-bold mb-8">{tOrderDetail("title")}</h1>
 
-      <div className="border rounded-lg p-6 bg-white">
-        <dl className="grid grid-cols-3 gap-y-2 text-sm">
-          <dt className="text-gray-500">{tOrderDetail("orderId")}</dt>
-          <dd className="col-span-2 font-mono">{order.id}</dd>
+      <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
+        <dl className="grid grid-cols-3 gap-y-2 text-sm py-4">
+          <dt>{tOrderDetail("orderId")}</dt>
+          <dd className="col-span-2 font-outfit">{order.id}</dd>
 
-          <dt className="text-gray-500">{tOrderDetail("createdAt")}</dt>
-          <dd className="col-span-2">{createdAtText}</dd>
+          <dt>{tOrderDetail("createdAt")}</dt>
+          <dd className="col-span-2 font-outfit">{createdAtText}</dd>
 
-          <dt className="text-gray-500">{tOrderDetail("status")}</dt>
+          <dt>{tOrderDetail("status")}</dt>
           <dd className="col-span-2">
             {data.status ? data.status : tOrderDetail("defaultStatus")}
           </dd>
         </dl>
 
-        <hr className="my-4" />
-
-        <h2 className="font-semibold mb-2">{tOrderDetail("items")}</h2>
-        <ul className="space-y-1 text-sm">
-          {data.items?.map((it, i) => (
-            <li key={i} className="flex justify-between">
-              <span>
-                {it.title} × {it.qty}
-              </span>
-              {it.price ? (
-                <span>{formatCurrency(locale, it.price * it.qty)}</span>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-
-        <hr className="my-4" />
-
-        <div className="space-y-1 text-sm">
+        <div className="py-4 text-sm space-y-2">
+          <div className="font-semibold">
+            <span>{tOrderDetail("items")}</span>
+          </div>
+          <ul className="space-y-2">
+            {data.items?.map((it, i) => (
+              <li key={i} className="flex justify-between">
+                <span>
+                  {it.title} ✕ {it.qty}
+                </span>
+                {it.price ? (
+                  <span className="font-outfit">
+                    {formatCurrency(it.price * it.qty)}
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="space-y-2 text-sm py-4">
           <div className="flex justify-between">
             <span>{tOrderDetail("products")}</span>
-            <span>{formatCurrency(locale, data.subtotal)}</span>
+            <span className="font-outfit">{formatCurrency(data.subtotal)}</span>
           </div>
           <div className="flex justify-between">
             <span>{tOrderDetail("shipping")}</span>
-            <span>{formatCurrency(locale, data.shippingFee)}</span>
+            <span className="font-outfit">
+              {formatCurrency(data.shippingFee)}
+            </span>
           </div>
-          <div className="flex justify-between font-semibold pt-1">
+          <div className="flex justify-between font-semibold">
             <span>{tOrderDetail("total")}</span>
-            <span>{formatCurrency(locale, data.total)}</span>
+            <span className="font-outfit">{formatCurrency(data.total)}</span>
           </div>
         </div>
       </div>
@@ -168,13 +171,13 @@ export default function OrderDetailPage() {
       <div className="mt-6 flex gap-3">
         <Link
           href={`/${locale}`}
-          className="px-4 py-2 border rounded hover:border-black"
+          className="px-4 py-2 rounded-xs border border-gray-200 hover:border-[color:var(--color-foreground)] transition-colors duration-300"
         >
           {tOrderDetail("toHome")}
         </Link>
         <Link
           href={`/${locale}/account/orders`}
-          className="px-4 py-2 bg-black text-white rounded"
+          className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)] text-[color:var(--color-background)] hover:opacity-75 transition-opacity duration-300"
         >
           {tOrderDetail("toOrders")}
         </Link>

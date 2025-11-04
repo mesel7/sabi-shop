@@ -6,13 +6,14 @@ import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { db } from "@/lib/firebase";
+import { formatCurrency } from "@/lib/format";
 
 type OrderDoc = {
   id: string;
   createdAt: string;
   total: number;
   status: string;
-  items: { title: string; qty: number }[];
+  items: { title: string; qty: number; imageUrl?: string }[];
 };
 
 export default function MyOrdersPage() {
@@ -58,49 +59,67 @@ export default function MyOrdersPage() {
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-10 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">{tOrders("title")}</h1>
+      <h1 className="text-2xl font-bold mb-8">{tOrders("title")}</h1>
       {fetching ? (
         <div>{tOrders("loading")}</div>
       ) : orders.length === 0 ? (
         <div>{tOrders("empty")}</div>
       ) : (
-        orders.map((o) => (
-          <div key={o.id} className="border rounded p-4 flex justify-between">
-            <div>
-              <p className="font-semibold">
-                {tOrders("number")}: {o.id}
-              </p>
-              <p className="text-sm text-gray-500">
-                {o.createdAt
-                  ? new Date(o.createdAt).toLocaleString(
-                      locale === "ko" ? "ko-KR" : "ja-JP"
-                    )
-                  : "-"}
-              </p>
-              <ul className="mt-2 text-sm text-gray-700">
-                {o.items.map((it, idx) => (
-                  <li key={idx}>
-                    {it.title} × {it.qty}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-2 font-semibold">
-                {tOrders("total")}: {o.total?.toLocaleString()}원
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 items-end">
-              <span className="text-xs border rounded px-2 py-1">
-                {o.status}
-              </span>
-              <Link
-                href={`/${locale}/order/${o.id}`}
-                className="text-xs underline text-gray-500"
-              >
-                {tCommon("seeDetail")}
-              </Link>
-            </div>
-          </div>
-        ))
+        <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
+          {orders.map((o) => {
+            const first = o.items?.[0];
+            const firstTitle = first?.title ?? tOrders("untitled");
+            const hasMore = (o.items?.length ?? 0) > 1;
+            const thumb = first?.imageUrl || "/placeholder.png";
+
+            return (
+              <div key={o.id} className="py-4 flex justify-between">
+                {/* 왼쪽 */}
+                <div className="flex items-center gap-4">
+                  <img
+                    src={thumb}
+                    alt={firstTitle}
+                    className="w-20 h-20 object-contain bg-gray-100"
+                  />
+                  <div>
+                    {/* 첫 상품명만, 뒤에 있으면 ... */}
+                    <p className="font-medium">
+                      {firstTitle}
+                      {hasMore ? " ..." : ""}
+                    </p>
+
+                    {/* 총액 */}
+                    <p className="text-sm font-outfit">
+                      {formatCurrency(o.total)}
+                    </p>
+
+                    {/* 결제 일시 */}
+                    <p className="text-sm text-gray-500 font-outfit">
+                      {o.createdAt
+                        ? new Date(o.createdAt).toLocaleString(
+                            locale === "ko" ? "ko-KR" : "ja-JP"
+                          )
+                        : "-"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* 오른쪽 */}
+                <div className="flex flex-col gap-2 items-end">
+                  <span className="text-xs rounded-xs border border-gray-300 px-2 py-1">
+                    {o.status}
+                  </span>
+                  <Link
+                    href={`/${locale}/order/${o.id}`}
+                    className="text-xs text-gray-500"
+                  >
+                    {tCommon("seeDetail")}
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       )}
     </section>
   );

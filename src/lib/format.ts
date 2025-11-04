@@ -1,12 +1,7 @@
-export const SHIPPING_FEE = { ko: 2500, ja: 300 };
+export const SHIPPING_FEE = { ko: 2500, ja: 2500 };
 
-export function formatCurrency(locale: "ko" | "ja", value: number) {
-  const currency = locale === "ja" ? "JPY" : "KRW";
-  return new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-    maximumFractionDigits: 0,
-  }).format(value);
+export function formatCurrency(value: number) {
+  return `₩ ${value.toLocaleString("ko-KR")}`;
 }
 
 export function formatDateTime(

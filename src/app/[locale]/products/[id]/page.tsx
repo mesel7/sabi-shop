@@ -36,13 +36,18 @@ export default async function ProductDetail({ params }: Props) {
 
         <ProductDetailClient
           locale={locale}
-          p={{ id: p.id, price: p.price, imageUrl: p.imageUrl }}
-          title={title}
+          p={{
+            id: p.id,
+            price: p.price,
+            imageUrl: p.imageUrl,
+            title_ko: p.title_ko,
+            title_ja: p.title_ja,
+          }}
           desc={desc}
         />
       </div>
 
-      <hr className="my-10" />
+      <hr className="my-10 text-gray-200" />
       <div className="prose max-w-none text-sm text-gray-700">
         <h2 className="text-base font-semibold mb-2">
           {tProductDetail("detailTitle")}

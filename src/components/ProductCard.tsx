@@ -13,7 +13,7 @@ export default function ProductCard({ p }: { p: Product }) {
   return (
     <Link
       href={`/${locale}/products/${p.id}`}
-      className="block group rounded-md overflow-hidden border hover:shadow-sm transition"
+      className="block group overflow-hidden"
     >
       <div className="aspect-square bg-gray-100 relative">
         {/* 이미지 비었을 때를 대비한 fill */}
@@ -21,12 +21,12 @@ export default function ProductCard({ p }: { p: Product }) {
           src={p.imageUrl}
           alt={title}
           fill
-          className="object-contain p-6 group-hover:scale-[1.02] transition"
+          className="object-contain p-6 group-hover:opacity-50 transition-opacity duration-300"
         />
       </div>
-      <div className="p-4">
-        <h3 className="text-sm text-gray-800">{title}</h3>
-        <p className="mt-1 text-gray-500">{formatCurrency(locale, p.price)}</p>
+      <div className="p-4 flex flex-col items-center text-center">
+        <h3 className="text-sm">{title}</h3>
+        <p className="text-sm mt-1 font-outfit">{formatCurrency(p.price)}</p>
       </div>
     </Link>
   );

@@ -41,7 +41,19 @@
     "sortNew": "新着",
     "sortPriceAsc": "価格が安い順",
     "sortPriceDesc": "価格が高い順",
-    "empty": "商品がありません。"
+    "empty": "商品がありません。",
+    "searchPlaceholder": "商品名で検索",
+    "searchResult": "「{keyword}」の検索結果 {count}件",
+    "categories": {
+      "all": "すべて",
+      "beans": "コーヒー豆",
+      "drip": "ドリップバッグ",
+      "goods": "グッズ",
+      "tumbler": "タンブラー",
+      "capsule": "カプセル",
+      "seasonal": "シーズン限定",
+      "gift": "ギフトセット"
+    }
   },
   "cart": {
     "title": "カート",

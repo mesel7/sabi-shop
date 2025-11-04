@@ -25,3 +25,25 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+/* input 자동완성 배경 없애기 (Chrome, Safari) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--background) inset;
+  -webkit-text-fill-color: var(--foreground);
+  transition: background-color 9999s ease-out 0s;
+}
+
+input:-webkit-autofill {
+  -webkit-background-clip: text;
+}
+
+/* 입력창들 focus 스타일 제거 */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}

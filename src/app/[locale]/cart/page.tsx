@@ -32,7 +32,7 @@ export default function CartPage() {
         <p>{tCart("empty")}</p>
         <Link
           href={`/${locale}/products`}
-          className="text-black underline mt-3 inline-block"
+          className="text-[color:var(--color-foreground)] mt-8 inline-block"
         >
           {tCart("goShop")}
         </Link>
@@ -44,75 +44,111 @@ export default function CartPage() {
     <section className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-8">{tCart("title")}</h1>
       {/* 상품 목록 */}
-      <div className="space-y-4 border-t border-b divide-y">
-        {items.map((it) => (
-          <div key={it.id} className="flex items-center justify-between py-4">
-            <div className="flex items-center gap-4">
-              <img
-                src={it.imageUrl}
-                alt={it.title}
-                className="w-20 h-20 object-contain bg-gray-100 rounded"
-              />
-              <div>
-                <p className="font-medium">{it.title}</p>
-                <p className="text-sm text-gray-500">
-                  {formatCurrency(locale, it.price)}
+      <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
+        {items.map((it) => {
+          const displayTitle = locale === "ja" ? it.title_ja : it.title_ko;
+          return (
+            <div key={it.id} className="flex items-center justify-between py-4">
+              <div className="flex items-center gap-4">
+                <img
+                  src={it.imageUrl}
+                  alt={displayTitle}
+                  className="w-20 h-20 object-contain bg-gray-100"
+                />
+                <div>
+                  <p className="font-medium">{displayTitle}</p>
+                  <p className="text-sm text-gray-500 font-outfit">
+                    {formatCurrency(it.price)}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  id={`qty-${it.id}`}
+                  name={`qty-${it.id}`}
+                  type="number"
+                  min={1}
+                  max={99}
+                  value={it.qty}
+                  onChange={(e) =>
+                    dispatch(
+                      updateQty({ id: it.id, qty: Number(e.target.value) })
+                    )
+                  }
+                  className="w-14 rounded-xs border border-gray-300 text-center font-outfit"
+                />
+                <p className="w-20 text-right font-outfit">
+                  {formatCurrency(it.price * it.qty)}
                 </p>
+                <button
+                  onClick={() => dispatch(removeItem(it.id))}
+                  className="text-gray-400 hover:text-[color:var(--color-foreground)] transition-colors duration-300 text-sm cursor-pointer"
+                >
+                  ✕
+                </button>
               </div>
             </div>
-
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                min={1}
-                max={99}
-                value={it.qty}
-                onChange={(e) =>
-                  dispatch(
-                    updateQty({ id: it.id, qty: Number(e.target.value) })
-                  )
-                }
-                className="w-14 border rounded text-center"
-              />
-              <p className="w-20 text-right">
-                {formatCurrency(locale, it.price * it.qty)}
-              </p>
-              <button
-                onClick={() => dispatch(removeItem(it.id))}
-                className="text-gray-400 hover:text-black text-sm"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {/* 총합계 영역 */}
-      <div className="mt-8 flex flex-col items-end text-sm">
-        <p>
-          {tCart("subtotal")}: {formatCurrency(locale, subtotal)}
-        </p>
-        <p>
-          {tCart("shipping")}: {formatCurrency(locale, shipping)}
-        </p>
-        <p className="font-bold text-base mt-2">
-          {tCart("total")}: {formatCurrency(locale, total)}
-        </p>
-      </div>
-      {/* 버튼 */}
-      <div className="mt-8 flex justify-end gap-3">
-        <button
-          onClick={() => dispatch(clearCart())}
-          className="px-4 py-2 border rounded hover:border-black"
-        >
-          {tCart("clear")}
-        </button>
-        <Link
-          href={`/${locale}/checkout`}
-          className="px-4 py-2 bg-black text-white rounded"
-        >
-          {tCart("checkout")}
-        </Link>
+      <div className="mt-10 text-center">
+        <div className="flex justify-center items-end gap-4">
+          {/* 상품 합계 */}
+          <div className="flex flex-col items-center">
+            <p className="text-2xl leading-none font-outfit">
+              {formatCurrency(subtotal)}
+            </p>
+            <p className="text-sm text-gray-400 mt-4">{tCart("subtotal")}</p>
+          </div>
+
+          {/* + */}
+          <span className="text-xl mb-8 font-outfit">+</span>
+
+          {/* 배송비 */}
+          <div className="flex flex-col items-center">
+            <p className="text-2xl leading-none font-outfit">
+              {shipping === 0
+                ? tCart("freeShipping")
+                : formatCurrency(shipping)}
+            </p>
+            <p className="text-sm text-gray-400 mt-4">{tCart("shipping")}</p>
+          </div>
+
+          {/* = */}
+          <span className="text-xl mb-8 font-outfit">=</span>
+
+          {/* 총액 */}
+          <div className="flex flex-col items-center">
+            <p className="text-2xl leading-none font-outfit">
+              {formatCurrency(total)}
+            </p>
+            <p className="text-sm text-gray-400 mt-4">{tCart("total")}</p>
+          </div>
+        </div>
+
+        <hr className="w-full border-t border-gray-200 my-6" />
+
+        {/* 버튼 */}
+        <div className="flex justify-center gap-4">
+          <button
+            onClick={() => dispatch(clearCart())}
+            className="px-4 py-2 rounded-xs border border-gray-200
+            hover:border-[color:var(--color-foreground)]
+            transition-colors duration-300 cursor-pointer"
+          >
+            {tCart("clear")}
+          </button>
+          <Link
+            href={`/${locale}/checkout`}
+            className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)]
+            text-[color:var(--color-background)]
+            hover:opacity-75 transition-opacity duration-300"
+          >
+            {tCart("checkout")}
+          </Link>
+        </div>
       </div>
     </section>
   );

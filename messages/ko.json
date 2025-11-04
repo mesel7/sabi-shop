@@ -39,9 +39,21 @@
   "products": {
     "title": "상품 목록",
     "sortNew": "신상품",
-    "sortPriceAsc": "가격↑",
-    "sortPriceDesc": "가격↓",
-    "empty": "상품이 없습니다."
+    "sortPriceAsc": "낮은 가격순",
+    "sortPriceDesc": "높은 가격순",
+    "empty": "상품이 없습니다.",
+    "searchPlaceholder": "상품명으로 검색",
+    "searchResult": "\"{keyword}\" 검색 결과 {count}개",
+    "categories": {
+      "all": "전체",
+      "beans": "원두",
+      "drip": "드립백",
+      "goods": "굿즈",
+      "tumbler": "텀블러",
+      "capsule": "캡슐",
+      "seasonal": "시즌 한정",
+      "gift": "기프트 세트"
+    }
   },
   "cart": {
     "title": "장바구니",

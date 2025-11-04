@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { clearCart } from "@/store/cartSlice";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
-import { SHIPPING_FEE } from "@/lib/format";
+import { useId, useState } from "react";
+import { formatCurrency, SHIPPING_FEE } from "@/lib/format";
 import { createOrder } from "@/lib/orders";
 import { useRouter } from "next/navigation";
 
@@ -29,6 +29,12 @@ export default function CheckoutPage() {
   const [agree, setAgree] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  // 고유 id(유의미할 필요는 없고 구분만 가능하게)
+  const nameId = useId();
+  const phoneId = useId();
+  const addrId = useId();
+  const agreeId = useId();
 
   if (!user) {
     return (
@@ -60,7 +66,7 @@ export default function CheckoutPage() {
         userId: user.uid,
         items: cart.items.map((i) => ({
           productId: i.id,
-          title: i.title,
+          title: locale === "ja" ? i.title_ja : i.title_ko,
           price: i.price,
           qty: i.qty,
           imageUrl: i.imageUrl,
@@ -90,34 +96,44 @@ export default function CheckoutPage() {
       <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-4">
           <div>
-            <label className="block text-sm mb-1">{tCheckout("name")}</label>
+            <label htmlFor={nameId} className="block text-sm mb-1">
+              {tCheckout("name")}
+            </label>
             <input
-              className="w-full border rounded px-3 py-2"
+              id={nameId}
+              className="w-full border border-gray-300 rounded-xs px-3 py-2"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">{tCheckout("phone")}</label>
+            <label htmlFor={phoneId} className="block text-sm mb-1">
+              {tCheckout("phone")}
+            </label>
             <input
-              className="w-full border rounded px-3 py-2"
+              id={phoneId}
+              className="w-full border border-gray-300 rounded-xs px-3 py-2"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
           </div>
           <div>
-            <label className="block text-sm mb-1">{tCheckout("address")}</label>
+            <label htmlFor={addrId} className="block text-sm mb-1">
+              {tCheckout("address")}
+            </label>
             <input
-              className="w-full border rounded px-3 py-2"
+              id={addrId}
+              className="w-full border border-gray-300 rounded-xs px-3 py-2"
               value={addr}
               onChange={(e) => setAddr(e.target.value)}
               required
             />
           </div>
-          <label className="flex gap-2 items-center text-sm">
+          <label htmlFor={agreeId} className="flex gap-2 items-center text-sm">
             <input
+              id={agreeId}
               type="checkbox"
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
@@ -130,26 +146,30 @@ export default function CheckoutPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="px-4 py-2 bg-black text-white rounded disabled:opacity-60"
+            className="rounded-xs px-4 py-2 bg-[color:var(--color-foreground)]
+              text-[color:var(--color-background)]
+              hover:opacity-75 transition-opacity duration-300 cursor-pointer disabled:opacity-75"
           >
             {submitting ? tCommon("loading") : tCheckout("placeOrder")}
           </button>
         </div>
 
-        <div className="border rounded p-4 space-y-2 bg-gray-50">
+        <div className="p-4 space-y-2">
           <h2 className="font-semibold mb-2">{tCheckout("summary")}</h2>
           <div className="flex justify-between text-sm">
             <span>{tCheckout("products")}</span>
-            <span>{cart.subtotal.toLocaleString()}원</span>
+            <span className="font-outfit">{formatCurrency(cart.subtotal)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span>{tCheckout("delivery")}</span>
-            <span>{shippingFee.toLocaleString()}원</span>
+            <span className="font-outfit">{formatCurrency(shippingFee)}</span>
           </div>
-          <hr />
+          <hr className="text-gray-200" />
           <div className="flex justify-between font-semibold">
             <span>{tCheckout("total")}</span>
-            <span>{(cart.subtotal + shippingFee).toLocaleString()}원</span>
+            <span className="font-outfit">
+              {formatCurrency(cart.subtotal + shippingFee)}
+            </span>
           </div>
         </div>
       </form>
