@@ -23,17 +23,18 @@ export default function CartPage() {
 
   if (!isClient) {
     // 서버 렌더 단계에서는 아무 것도 안 그림 (Hydration mismatch 방지)
-    return <div className="p-8 text-gray-400">{tCommon("loading")}</div>;
+    return (
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <p>{tCommon("loading")}</p>
+      </section>
+    );
   }
 
   if (items.length === 0) {
     return (
-      <section className="max-w-4xl mx-auto px-4 py-20 text-center text-gray-500">
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
         <p>{tCart("empty")}</p>
-        <Link
-          href={`/${locale}/products`}
-          className="text-[color:var(--color-foreground)] mt-8 inline-block"
-        >
+        <Link href={`/${locale}/products`} className="mt-8 inline-block">
           {tCart("goShop")}
         </Link>
       </section>

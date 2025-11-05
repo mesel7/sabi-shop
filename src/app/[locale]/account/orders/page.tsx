@@ -59,9 +59,21 @@ export default function MyOrdersPage() {
     fetchOrders();
   }, [user]);
 
-  if (loading) return <div className="p-8">{tCommon("loading")}</div>;
-  if (!user) return <div className="p-8">{tOrders("needLogin")}</div>;
+  if (loading) {
+    return (
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <p>{tCommon("loading")}</p>
+      </section>
+    );
+  }
 
+  if (!user) {
+    return (
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <p>{tOrders("needLogin")}</p>
+      </section>
+    );
+  }
   return (
     <section className="max-w-4xl mx-auto px-4 py-10 space-y-4">
       <h1 className="text-2xl font-bold mb-8">{tOrders("title")}</h1>

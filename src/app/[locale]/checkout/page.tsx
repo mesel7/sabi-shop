@@ -18,6 +18,7 @@ export default function CheckoutPage() {
 
   const tCheckout = useTranslations("checkout");
   const tCommon = useTranslations("common");
+  const tAuth = useTranslations("auth");
 
   const cart = useSelector((s: RootState) => s.cart);
   const shippingFee = SHIPPING_FEE[locale] ?? 2500;
@@ -38,9 +39,9 @@ export default function CheckoutPage() {
 
   if (!user) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-10">
-        {tCheckout("needLogin")}
-      </div>
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <p>{tCheckout("needLogin")}</p>
+      </section>
     );
   }
 

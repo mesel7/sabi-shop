@@ -94,23 +94,20 @@ export default function OrderDetailPage() {
   // 화면 렌더링
   if (loading || fetching) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-10 text-sm text-gray-500">
-        {tCommon("loading")}
-      </div>
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+        <p>{tCommon("loading")}</p>
+      </section>
     );
   }
 
   if (notFound || !order) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-10 space-y-4">
+      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
         <p>{tOrderDetail("notFound")}</p>
-        <Link
-          href={`/${locale}/account/orders`}
-          className="inline-block px-4 py-2 border rounded"
-        >
+        <Link href={`/${locale}/account/orders`} className="mt-8 inline-block">
           {tOrderDetail("toOrders")}
         </Link>
-      </div>
+      </section>
     );
   }
 

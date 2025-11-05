@@ -66,7 +66,7 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
       aria-modal="true"
       aria-labelledby={modalTitleId}
     >
-      <div className="bg-white rounded w-full max-w-md shadow-lg relative">
+      <div className="bg-[color:var(--color-background)] rounded-xs w-full max-w-md shadow-lg relative">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-400 hover:text-[color:var(--color-foreground)] transition-colors duration-300 text-lg cursor-pointer"
