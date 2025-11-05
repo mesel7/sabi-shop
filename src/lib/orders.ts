@@ -3,7 +3,8 @@ import { db } from "./firebase";
 
 export type OrderItemInput = {
   productId: string;
-  title: string;
+  title_ko: string;
+  title_ja: string;
   price: number;
   qty: number;
   imageUrl?: string;

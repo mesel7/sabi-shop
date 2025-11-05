@@ -13,7 +13,12 @@ type OrderDoc = {
   createdAt: string;
   total: number;
   status: string;
-  items: { title: string; qty: number; imageUrl?: string }[];
+  items: {
+    title_ko: string;
+    title_ja: string;
+    qty: number;
+    imageUrl?: string;
+  }[];
 };
 
 export default function MyOrdersPage() {
@@ -68,7 +73,8 @@ export default function MyOrdersPage() {
         <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
           {orders.map((o) => {
             const first = o.items?.[0];
-            const firstTitle = first?.title ?? tOrders("untitled");
+            const firstTitle =
+              locale === "ja" ? first?.title_ja : first?.title_ko;
             const hasMore = (o.items?.length ?? 0) > 1;
             const thumb = first?.imageUrl || "/placeholder.png";
 

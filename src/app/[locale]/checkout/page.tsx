@@ -66,7 +66,8 @@ export default function CheckoutPage() {
         userId: user.uid,
         items: cart.items.map((i) => ({
           productId: i.id,
-          title: locale === "ja" ? i.title_ja : i.title_ko,
+          title_ko: i.title_ko,
+          title_ja: i.title_ja,
           price: i.price,
           qty: i.qty,
           imageUrl: i.imageUrl,

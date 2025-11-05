@@ -11,7 +11,13 @@ import { db } from "@/lib/firebase";
 
 type OrderData = {
   userId: string;
-  items: { title: string; qty: number; price?: number; imageUrl?: string }[];
+  items: {
+    title_ko: string;
+    title_ja: string;
+    qty: number;
+    price: number;
+    imageUrl?: string;
+  }[];
   subtotal: number;
   shippingFee: number;
   total: number;
@@ -139,7 +145,7 @@ export default function OrderDetailPage() {
             {data.items?.map((it, i) => (
               <li key={i} className="flex justify-between">
                 <span>
-                  {it.title} ✕ {it.qty}
+                  {locale === "ja" ? it.title_ja : it.title_ko} ✕ {it.qty}
                 </span>
                 {it.price ? (
                   <span className="font-outfit">
