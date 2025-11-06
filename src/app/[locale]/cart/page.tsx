@@ -7,6 +7,7 @@ import { formatCurrency, SHIPPING_FEE } from "@/lib/format";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useIsClient } from "@/hooks/useIsClient";
+import { Button } from "@/components/Button";
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -133,22 +134,12 @@ export default function CartPage() {
 
         {/* 버튼 */}
         <div className="flex justify-center gap-4">
-          <button
-            onClick={() => dispatch(clearCart())}
-            className="px-4 py-2 rounded-xs border border-gray-200
-            hover:border-[color:var(--color-foreground)]
-            transition-colors duration-300 cursor-pointer"
-          >
+          <Button onClick={() => dispatch(clearCart())} variant="outline">
             {tCart("clear")}
-          </button>
-          <Link
-            href={`/${locale}/checkout`}
-            className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)]
-            text-[color:var(--color-background)]
-            hover:opacity-75 transition-opacity duration-300"
-          >
+          </Button>
+          <Button href={`/${locale}/checkout`} variant="primary">
             {tCart("checkout")}
-          </Link>
+          </Button>
         </div>
       </div>
     </section>

@@ -17,7 +17,21 @@
     "seeDetail": "자세히 보기"
   },
   "home": {
-    "title": "Sabi Shop"
+    "cta": { "shop": "지금 쇼핑하기", "contact": "문의하기" },
+    "about": {
+      "title": "「侘び・寂び」, 조용한 아름다움",
+      "body1": "화려함보다 여백을, 과시보다 온기를. SABI SHOP은 절제된 디자인과 균형 잡힌 맛으로 조용한 아름다움을 전하고자 합니다.",
+      "body2": "당신의 하루에 필요한 것은 때로 한 잔의 온기뿐. 작지만 깊은 만족을 전합니다."
+    },
+    "featured": {
+      "title": "Seasonal Beans",
+      "more": "전체 보기",
+      "cta": "자세히 보기"
+    },
+    "brewing": {
+      "title": "WHAT’S BREWING",
+      "cta": "읽기"
+    }
   },
   "auth": {
     "login": "로그인",

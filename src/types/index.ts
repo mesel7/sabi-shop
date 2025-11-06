@@ -17,3 +17,11 @@ export type Product = {
   isActive: boolean;
   createdAt: number; // epoch
 };
+
+export type Story = {
+  id: string;
+  title_ko: string;
+  title_ja: string;
+  date: string;
+  imageUrl?: string;
+};
