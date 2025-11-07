@@ -124,12 +124,12 @@ export default function MyOrdersPage() {
 
                 {/* 오른쪽 */}
                 <div className="flex flex-col gap-2 items-end">
-                  <span className="text-xs rounded-xs border border-gray-300 px-2 py-1">
+                  <span className="text-xs border border-gray-300 px-2 py-1">
                     {o.status}
                   </span>
                   <Link
                     href={`/${locale}/order/${o.id}`}
-                    className="text-xs text-gray-500"
+                    className="text-xs text-gray-500 hover:text-[color:var(--color-foreground)] transition-colors duration-300"
                   >
                     {tCommon("seeDetail")}
                   </Link>

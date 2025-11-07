@@ -21,7 +21,7 @@ export default function ProductCard({ p }: { p: Product }) {
           src={p.imageUrl}
           alt={title}
           fill
-          className="object-contain p-6 group-hover:opacity-50 transition-opacity duration-300"
+          className="object-contain group-hover:opacity-75 transition-opacity duration-300"
         />
       </div>
       <div className="p-4 flex flex-col items-center text-center">

@@ -25,13 +25,8 @@ export default async function ProductDetail({ params }: Props) {
   return (
     <section className="max-w-4xl mx-auto px-4 py-10">
       <div className="grid md:grid-cols-2 gap-10">
-        <div className="relative aspect-square bg-gray-100 rounded">
-          <Image
-            src={p.imageUrl}
-            alt={title}
-            fill
-            className="object-contain p-6"
-          />
+        <div className="relative aspect-square bg-gray-100">
+          <Image src={p.imageUrl} alt={title} fill className="object-contain" />
         </div>
 
         <ProductDetailClient

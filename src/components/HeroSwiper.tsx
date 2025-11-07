@@ -8,12 +8,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 const SLIDES = [
-  { src: "/images/home/coffee1.jpg", alt: "Coffee1" },
-  { src: "/images/home/coffee2.jpg", alt: "Coffee2" },
-  { src: "/images/home/coffee3.jpg", alt: "Coffee3" },
-  { src: "/images/home/coffee4.jpg", alt: "Coffee4" },
-  { src: "/images/home/coffee5.jpg", alt: "Coffee5" },
-  { src: "/images/home/coffee6.jpg", alt: "Coffee6" },
+  { src: "/images/home/hero/coffee1.jpg", alt: "Coffee1" },
+  { src: "/images/home/hero/coffee2.jpg", alt: "Coffee2" },
+  { src: "/images/home/hero/coffee3.jpg", alt: "Coffee3" },
+  { src: "/images/home/hero/coffee4.jpg", alt: "Coffee4" },
+  { src: "/images/home/hero/coffee5.jpg", alt: "Coffee5" },
+  { src: "/images/home/hero/coffee6.jpg", alt: "Coffee6" },
 ];
 
 const DURATION = 1200; // 전환 속도(ms)
