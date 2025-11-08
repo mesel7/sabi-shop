@@ -13,10 +13,7 @@ export default function LocaleSwitcher() {
   const target = `/${other}${cleaned}`;
 
   return (
-    <Link
-      href={target}
-      className="text-sm font-outfit hover:opacity-50 transition-opacity duration-300"
-    >
+    <Link href={target} className="text-sm font-outfit">
       {other.toUpperCase()}
     </Link>
   );
