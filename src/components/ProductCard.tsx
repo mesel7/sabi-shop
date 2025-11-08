@@ -20,8 +20,9 @@ export default function ProductCard({ p }: { p: Product }) {
         <Image
           src={p.imageUrl}
           alt={title}
-          fill
-          className="object-contain group-hover:opacity-75 transition-opacity duration-300"
+          width={512}
+          height={512}
+          className="w-full h-full object-contain group-hover:opacity-75 transition-opacity duration-300"
         />
       </div>
       <div className="p-4 flex flex-col items-center text-center">

@@ -16,8 +16,9 @@ export default function StoryCard({ s }: { s: Story }) {
           <Image
             src={s.imageUrl}
             alt={title}
-            fill
-            className="object-contain group-hover:opacity-75 transition-opacity duration-300"
+            width={512}
+            height={512}
+            className="w-full h-full object-contain group-hover:opacity-75 transition-opacity duration-300"
           />
         ) : null}
       </div>
