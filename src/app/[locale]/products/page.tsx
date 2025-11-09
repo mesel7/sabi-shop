@@ -1,5 +1,6 @@
 import ProductCard from "@/components/ProductCard";
 import { PRODUCTS } from "@/site/products.mock";
+import { Search, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
@@ -77,8 +78,8 @@ export default async function ProductsPage({ params, searchParams }: Props) {
   };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
-      <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
+      <div className="mb-6 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         {/* 카테고리 */}
         <div className="flex flex-wrap gap-2">
           {categoryOptions.map((cat) => (
@@ -121,7 +122,7 @@ export default async function ProductsPage({ params, searchParams }: Props) {
                 className="text-gray-400 hover:text-[color:var(--color-foreground)] transition-colors duration-300 text-sm"
                 aria-label="clear search"
               >
-                ✕
+                <X className="w-4 h-4" />
               </Link>
             ) : null}
             {/* 돋보기 아이콘 */}
@@ -130,20 +131,7 @@ export default async function ProductsPage({ params, searchParams }: Props) {
               className="text-gray-400 hover:text-[color:var(--color-foreground)] transition-colors duration-300 cursor-pointer"
               aria-label="search"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="1.7"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m21 21-4.35-4.35m0-6.4a6.25 6.25 0 1 1-12.5 0 6.25 6.25 0 0 1 12.5 0Z"
-                />
-              </svg>
+              <Search className="w-5 h-5 stroke-[1.7]" />
             </button>
           </div>
         </form>

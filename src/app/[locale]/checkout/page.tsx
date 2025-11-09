@@ -9,6 +9,8 @@ import { useId, useState } from "react";
 import { formatCurrency, SHIPPING_FEE } from "@/lib/format";
 import { createOrder } from "@/lib/orders";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/Button";
+import { Check } from "lucide-react";
 
 export default function CheckoutPage() {
   const { user } = useAuth();
@@ -91,6 +93,28 @@ export default function CheckoutPage() {
     }
   };
 
+  // 주문 요약 (모바일, 데스크탑에 맞게 block, hidden)
+  const OrderSummary = () => (
+    <div className="py-4 md:px-4 space-y-2">
+      <h2 className="font-semibold mb-2">{tCheckout("summary")}</h2>
+      <div className="flex justify-between text-sm">
+        <span>{tCheckout("products")}</span>
+        <span className="font-outfit">{formatCurrency(cart.subtotal)}</span>
+      </div>
+      <div className="flex justify-between text-sm">
+        <span>{tCheckout("delivery")}</span>
+        <span className="font-outfit">{formatCurrency(shippingFee)}</span>
+      </div>
+      <hr className="text-gray-200" />
+      <div className="flex justify-between font-semibold">
+        <span>{tCheckout("total")}</span>
+        <span className="font-outfit">
+          {formatCurrency(cart.subtotal + shippingFee)}
+        </span>
+      </div>
+    </div>
+  );
+
   return (
     <section className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6">{tCheckout("title")}</h1>
@@ -103,76 +127,90 @@ export default function CheckoutPage() {
             </label>
             <input
               id={nameId}
-              className="w-full border border-gray-300 rounded-xs px-3 py-2"
+              className="w-full border border-gray-300 px-3 py-2"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
+
           <div>
             <label htmlFor={phoneId} className="block text-sm mb-1">
               {tCheckout("phone")}
             </label>
             <input
               id={phoneId}
-              className="w-full border border-gray-300 rounded-xs px-3 py-2"
+              className="w-full border border-gray-300 px-3 py-2"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
             />
           </div>
+
           <div>
             <label htmlFor={addrId} className="block text-sm mb-1">
               {tCheckout("address")}
             </label>
             <input
               id={addrId}
-              className="w-full border border-gray-300 rounded-xs px-3 py-2"
+              className="w-full border border-gray-300 px-3 py-2"
               value={addr}
               onChange={(e) => setAddr(e.target.value)}
               required
             />
           </div>
-          <label htmlFor={agreeId} className="flex gap-2 items-center text-sm">
+
+          {/* 모바일 */}
+          <div className="md:hidden mt-4">
+            <OrderSummary />
+          </div>
+
+          {/* 커스텀 체크박스 */}
+          <label
+            htmlFor={agreeId}
+            className="flex gap-2 items-center text-sm cursor-pointer select-none mt-4"
+          >
+            <span
+              className={`
+                inline-flex items-center justify-center
+                w-4 h-4 border
+                ${
+                  agree
+                    ? "bg-[color:var(--color-foreground)] border-[color:var(--color-foreground)]"
+                    : "border-gray-500 bg-[color:var(--color-background)]"
+                }
+                transition-colors
+              `}
+            >
+              {agree && (
+                <Check className="w-3 h-3 text-[color:var(--color-background)]" />
+              )}
+            </span>
+            <span>{tCheckout("agree")}</span>
             <input
               id={agreeId}
               type="checkbox"
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
+              className="sr-only"
             />
-            {tCheckout("agree")}
           </label>
 
           {error && <p className="text-sm text-red-500">{error}</p>}
-
-          <button
+          <Button
             type="submit"
+            variant="primary"
+            full
             disabled={submitting}
-            className="rounded-xs px-4 py-2 bg-[color:var(--color-foreground)]
-              text-[color:var(--color-background)]
-              hover:opacity-75 transition-opacity duration-300 cursor-pointer disabled:opacity-75"
+            className="mt-2 md:w-auto"
           >
             {submitting ? tCommon("loading") : tCheckout("placeOrder")}
-          </button>
+          </Button>
         </div>
 
-        <div className="p-4 space-y-2">
-          <h2 className="font-semibold mb-2">{tCheckout("summary")}</h2>
-          <div className="flex justify-between text-sm">
-            <span>{tCheckout("products")}</span>
-            <span className="font-outfit">{formatCurrency(cart.subtotal)}</span>
-          </div>
-          <div className="flex justify-between text-sm">
-            <span>{tCheckout("delivery")}</span>
-            <span className="font-outfit">{formatCurrency(shippingFee)}</span>
-          </div>
-          <hr className="text-gray-200" />
-          <div className="flex justify-between font-semibold">
-            <span>{tCheckout("total")}</span>
-            <span className="font-outfit">
-              {formatCurrency(cart.subtotal + shippingFee)}
-            </span>
-          </div>
+        {/* 데스크탑 */}
+        <div className="hidden md:block">
+          <OrderSummary />
         </div>
       </form>
     </section>

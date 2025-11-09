@@ -22,7 +22,7 @@ export default function StoryCard({ s }: { s: Story }) {
           />
         ) : null}
       </div>
-      <div className="p-4 flex flex-col">
+      <div className="px-2 py-4 flex flex-col">
         <p className="text-sm mt-1 font-outfit">{s.date}</p>
         <h3 className="text-sm">{title}</h3>
       </div>

@@ -25,7 +25,7 @@ export default function ProductCard({ p }: { p: Product }) {
           className="w-full h-full object-contain group-hover:opacity-75 transition-opacity duration-300"
         />
       </div>
-      <div className="p-4 flex flex-col items-center text-center">
+      <div className="px-2 py-4 flex flex-col items-center text-center">
         <h3 className="text-sm">{title}</h3>
         <p className="text-sm mt-1 font-outfit">{formatCurrency(p.price)}</p>
       </div>

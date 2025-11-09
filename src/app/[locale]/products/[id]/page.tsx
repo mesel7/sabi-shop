@@ -26,7 +26,15 @@ export default async function ProductDetail({ params }: Props) {
     <section className="max-w-4xl mx-auto px-4 py-10">
       <div className="grid md:grid-cols-2 gap-10">
         <div className="relative aspect-square bg-gray-100">
-          <Image src={p.imageUrl} alt={title} fill className="object-contain" />
+          {/* LCP 최적화: 이미지 하나, 뷰포트 상단에 렌더이기 때문에 eager*/}
+          <Image
+            src={p.imageUrl}
+            alt={title}
+            width={1024}
+            height={1024}
+            className="w-full h-full object-contain"
+            loading="eager"
+          />
         </div>
 
         <ProductDetailClient

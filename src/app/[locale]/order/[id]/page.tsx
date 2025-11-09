@@ -8,6 +8,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "@/components/AuthProvider";
 import { formatCurrency, formatDateTime } from "@/lib/format";
 import { db } from "@/lib/firebase";
+import { Button } from "@/components/Button";
 
 type OrderData = {
   userId: string;
@@ -44,7 +45,6 @@ export default function OrderDetailPage() {
 
   useEffect(() => {
     if (!orderId) return;
-
     if (loading) return;
 
     // 로그인 안 한 상태면 그냥 없음
@@ -94,7 +94,7 @@ export default function OrderDetailPage() {
   // 화면 렌더링
   if (loading || fetching) {
     return (
-      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+      <section className="mx-auto px-4 py-10 md:max-w-md text-center">
         <p>{tCommon("loading")}</p>
       </section>
     );
@@ -102,7 +102,7 @@ export default function OrderDetailPage() {
 
   if (notFound || !order) {
     return (
-      <section className="max-w-4xl mx-auto px-4 py-20 text-center">
+      <section className="mx-auto px-4 py-10 md:max-w-md text-center">
         <p>{tOrderDetail("notFound")}</p>
         <Link href={`/${locale}/account/orders`} className="mt-8 inline-block">
           {tOrderDetail("toOrders")}
@@ -117,13 +117,13 @@ export default function OrderDetailPage() {
     : "-";
 
   return (
-    <section className="max-w-2xl mx-auto px-4 py-10">
+    <section className="mx-auto px-4 py-10 md:max-w-md">
       <h1 className="text-2xl font-bold mb-8">{tOrderDetail("title")}</h1>
 
       <div className="border-t border-b border-gray-200 divide-y divide-gray-200">
         <dl className="grid grid-cols-3 gap-y-2 text-sm py-4">
           <dt>{tOrderDetail("orderId")}</dt>
-          <dd className="col-span-2 font-outfit">{order.id}</dd>
+          <dd className="col-span-2 font-outfit break-all">{order.id}</dd>
 
           <dt>{tOrderDetail("createdAt")}</dt>
           <dd className="col-span-2 font-outfit">{createdAtText}</dd>
@@ -140,8 +140,8 @@ export default function OrderDetailPage() {
           </div>
           <ul className="space-y-2">
             {data.items?.map((it, i) => (
-              <li key={i} className="flex justify-between">
-                <span>
+              <li key={i} className="flex justify-between gap-4">
+                <span className="flex-1">
                   {locale === "ja" ? it.title_ja : it.title_ko} ✕ {it.qty}
                 </span>
                 {it.price ? (
@@ -153,6 +153,7 @@ export default function OrderDetailPage() {
             ))}
           </ul>
         </div>
+
         <div className="space-y-2 text-sm py-4">
           <div className="flex justify-between">
             <span>{tOrderDetail("products")}</span>
@@ -171,19 +172,24 @@ export default function OrderDetailPage() {
         </div>
       </div>
 
-      <div className="mt-6 flex gap-3">
-        <Link
+      {/* 버튼: 모바일 full, 데스크탑 가로 배치 */}
+      <div className="mt-6 flex flex-col md:flex-row gap-3">
+        <Button
           href={`/${locale}`}
-          className="px-4 py-2 rounded-xs border border-gray-200 hover:border-[color:var(--color-foreground)] transition-colors duration-300"
+          variant="outline"
+          full
+          className="md:w-auto"
         >
           {tOrderDetail("toHome")}
-        </Link>
-        <Link
+        </Button>
+        <Button
           href={`/${locale}/account/orders`}
-          className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)] text-[color:var(--color-background)] hover:opacity-75 transition-opacity duration-300"
+          variant="primary"
+          full
+          className="md:w-auto"
         >
           {tOrderDetail("toOrders")}
-        </Link>
+        </Button>
       </div>
     </section>
   );

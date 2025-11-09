@@ -24,7 +24,11 @@ export default function Home() {
           </h2>
           <p className="tracking-wider leading-8">{t("about.body1")}</p>
           <p className="mb-4 tracking-wider leading-8">{t("about.body2")}</p>
-          <Button href={`/${locale}/products`} variant="primary">
+          <Button
+            href={`/${locale}/products`}
+            variant="primary"
+            className="w-full md:w-auto"
+          >
             {t("cta.shop")}
           </Button>
         </div>
@@ -32,13 +36,19 @@ export default function Home() {
 
       {/* Seasonal Beans */}
       <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-        <div className="relative flex items-center justify-center">
-          <h2 className="text-xl md:text-2xl font-semibold font-outfit">
+        <div
+          className="
+        flex flex-col items-center text-center
+        md:flex-row md:items-center md:justify-between md:text-left
+      "
+        >
+          <h2 className="text-2xl font-semibold font-outfit mb-2 md:mb-0">
             {t("featured.title")}
           </h2>
+
           <Link
             href={`/${locale}/products`}
-            className="absolute right-0 text-sm text-gray-500 hover:text-[color:var(--color-foreground)] transition-colors duration-300"
+            className="text-sm text-gray-500 hover:text-[color:var(--color-foreground)] transition-colors duration-300"
           >
             {t("featured.more")}
           </Link>
@@ -51,7 +61,7 @@ export default function Home() {
 
       {/* WHAT'S BREWING */}
       <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
-        <h2 className="text-xl md:text-2xl font-semibold font-outfit text-center">
+        <h2 className="text-2xl font-semibold font-outfit text-center">
           {t("brewing.title")}
         </h2>
 

@@ -3,6 +3,8 @@
 import { useId, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { useTranslations } from "next-intl";
+import { X } from "lucide-react";
+import { Button } from "./Button";
 
 type Props = {
   mode: "login" | "signup";
@@ -66,13 +68,13 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
       aria-modal="true"
       aria-labelledby={modalTitleId}
     >
-      <div className="bg-[color:var(--color-background)] rounded-xs w-full max-w-md shadow-lg relative">
+      <div className="bg-[color:var(--color-background)] w-full max-w-md shadow-lg relative">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-400 hover:text-[color:var(--color-foreground)] transition-colors duration-300 text-lg cursor-pointer"
           type="button"
         >
-          ✕
+          <X className="w-6 h-6" />
         </button>
 
         <div className="p-6">
@@ -95,7 +97,7 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
                   name="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border border-gray-300 rounded-xs px-3 py-2"
+                  className="w-full border border-gray-300 px-3 py-2"
                   placeholder={tAuth("placeholderName")}
                   required
                   autoComplete="name"
@@ -113,7 +115,7 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-xs px-3 py-2"
+                className="w-full border border-gray-300 px-3 py-2"
                 placeholder={tAuth("placeholderEmail")}
                 required
                 autoComplete="email"
@@ -130,7 +132,7 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
                 type="password"
                 value={pw}
                 onChange={(e) => setPw(e.target.value)}
-                className="w-full border border-gray-300 rounded-xs px-3 py-2"
+                className="w-full border border-gray-300 px-3 py-2"
                 placeholder={tAuth("placeholderPassword")}
                 required
                 autoComplete={
@@ -145,15 +147,9 @@ export default function AuthModal({ mode: initialMode, onClose }: Props) {
               </p>
             )}
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full rounded-xs px-4 py-2 bg-[color:var(--color-foreground)]
-                text-[color:var(--color-background)]
-                hover:opacity-75 transition-opacity duration-300 cursor-pointer disabled:opacity-75"
-            >
+            <Button type="submit" variant="primary" full disabled={submitting}>
               {submitting ? tAuth("processing") : title}
-            </button>
+            </Button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">

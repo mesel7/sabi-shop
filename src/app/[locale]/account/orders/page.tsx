@@ -33,6 +33,7 @@ export default function MyOrdersPage() {
 
   useEffect(() => {
     if (!user) return;
+
     const fetchOrders = async () => {
       setFetching(true);
       const q = query(
@@ -56,6 +57,7 @@ export default function MyOrdersPage() {
       setOrders(list);
       setFetching(false);
     };
+
     fetchOrders();
   }, [user]);
 
@@ -74,9 +76,11 @@ export default function MyOrdersPage() {
       </section>
     );
   }
+
   return (
     <section className="max-w-4xl mx-auto px-4 py-10 space-y-4">
       <h1 className="text-2xl font-bold mb-8">{tOrders("title")}</h1>
+
       {fetching ? (
         <div>{tOrders("loading")}</div>
       ) : orders.length === 0 ? (
@@ -91,23 +95,30 @@ export default function MyOrdersPage() {
             const thumb = first?.imageUrl || "/placeholder.png";
 
             return (
-              <div key={o.id} className="py-4 flex justify-between">
-                {/* 왼쪽 */}
+              <div
+                key={o.id}
+                className="
+                  py-4
+                  flex flex-col gap-3
+                  md:flex-row md:items-center md:justify-between
+                "
+              >
+                {/* 왼쪽: 썸네일 + 정보 */}
                 <div className="flex items-center gap-4">
                   <img
                     src={thumb}
-                    alt={firstTitle}
+                    alt={firstTitle || ""}
                     className="w-20 h-20 object-contain bg-gray-100"
                   />
-                  <div>
-                    {/* 첫 상품명만, 뒤에 있으면 ... */}
+                  <div className="space-y-1">
+                    {/* 첫 상품명만, 뒤에 더 있으면 ... */}
                     <p className="font-medium">
-                      {firstTitle}
+                      {firstTitle || tOrders("noTitle")}
                       {hasMore ? " ..." : ""}
                     </p>
 
                     {/* 총액 */}
-                    <p className="text-sm font-outfit">
+                    <p className="text-sm text-gray-800 font-outfit">
                       {formatCurrency(o.total)}
                     </p>
 
@@ -122,9 +133,9 @@ export default function MyOrdersPage() {
                   </div>
                 </div>
 
-                {/* 오른쪽 */}
-                <div className="flex flex-col gap-2 items-end">
-                  <span className="text-xs border border-gray-300 px-2 py-1">
+                {/* 오른쪽: 상태 + 상세 보기 */}
+                <div className="flex flex-row gap-2 items-center justify-end md:flex-col md:items-end">
+                  <span className="text-[0.7rem] border border-gray-300 px-2 py-1">
                     {o.status}
                   </span>
                   <Link

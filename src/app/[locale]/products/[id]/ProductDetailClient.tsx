@@ -5,6 +5,7 @@ import { addItem } from "@/store/cartSlice";
 import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/lib/format";
 import { useTranslations } from "next-intl";
+import { Button } from "@/components/Button";
 
 type Props = {
   locale: "ko" | "ja";
@@ -51,24 +52,30 @@ export default function ProductDetailClient({ locale, p, desc }: Props) {
       </p>
       {desc && <p className="mt-4 text-gray-500">{desc}</p>}
 
-      <div className="mt-6 flex gap-3">
-        <button
+      <div
+        className="
+    mt-8
+    flex flex-col gap-3 items-stretch
+    md:flex-row md:items-center md:gap-4
+  "
+      >
+        <Button
           onClick={handleAddCart}
-          className="px-4 py-2 rounded-xs border border-gray-200
-            hover:border-[color:var(--color-foreground)]
-            transition-colors duration-300 cursor-pointer"
+          variant="outline"
+          full
+          className="md:w-auto"
         >
           {tProductDetail("addToCart")}
-        </button>
+        </Button>
 
-        <button
+        <Button
           onClick={handleBuyNow}
-          className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)]
-            text-[color:var(--color-background)]
-            hover:opacity-75 transition-opacity duration-300 cursor-pointer"
+          variant="primary"
+          full
+          className="md:w-auto"
         >
           {tProductDetail("buyNow")}
-        </button>
+        </Button>
       </div>
     </div>
   );

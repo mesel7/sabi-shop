@@ -1,45 +1,46 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
+import { Button } from "@/components/Button";
 
 export default function OrderSuccessPage() {
   const params = useSearchParams();
   const locale = useLocale() as "ko" | "ja";
-
   const tOrderSuccess = useTranslations("orderSuccess");
-
   const orderId = params.get("id");
 
   return (
-    <section className="max-w-md mx-auto px-4 py-20 text-center">
-      <div className="p-8">
+    <section className="mx-auto px-4 py-20 text-center md:max-w-md">
+      <div>
         <h1 className="text-2xl font-bold mb-4">{tOrderSuccess("title")}</h1>
         <p className="text-gray-600 mb-2">{tOrderSuccess("desc")}</p>
+
         {orderId && (
           <p className="text-sm text-gray-500 mb-6">
             {tOrderSuccess("orderId")}:{" "}
             <span className="font-mono">{orderId}</span>
           </p>
         )}
-        <div className="flex justify-center gap-3">
-          <Link
+
+        <div className="flex flex-col md:flex-row justify-center gap-3">
+          <Button
             href={`/${locale}`}
-            className="px-4 py-2 rounded-xs border border-gray-200
-            hover:border-[color:var(--color-foreground)]
-            transition-colors duration-300"
+            variant="outline"
+            full
+            className="md:w-auto"
           >
             {tOrderSuccess("toHome")}
-          </Link>
-          <Link
+          </Button>
+
+          <Button
             href={`/${locale}/account/orders`}
-            className="px-4 py-2 rounded-xs bg-[color:var(--color-foreground)]
-            text-[color:var(--color-background)]
-            hover:opacity-75 transition-opacity duration-300"
+            variant="primary"
+            full
+            className="md:w-auto"
           >
             {tOrderSuccess("toOrders")}
-          </Link>
+          </Button>
         </div>
       </div>
     </section>
