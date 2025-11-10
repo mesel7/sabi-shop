@@ -38,17 +38,29 @@ export default function Home() {
       <section className="max-w-7xl mx-auto px-4 md:px-6 py-12 md:py-16">
         <div
           className="
-        flex flex-col items-center text-center
-        md:flex-row md:items-center md:justify-between md:text-left
-      "
+    flex flex-col items-center text-center
+    md:flex-row md:items-center md:text-left
+    relative
+  "
         >
-          <h2 className="text-2xl font-semibold font-outfit mb-2 md:mb-0">
+          {/* 제목 */}
+          <h2
+            className="
+      text-2xl font-semibold font-outfit mb-2 md:mb-0
+      md:absolute md:left-1/2 md:-translate-x-1/2
+    "
+          >
             {t("featured.title")}
           </h2>
 
+          {/* 더보기 링크 */}
           <Link
             href={`/${locale}/products`}
-            className="text-sm text-gray-500 hover:text-[color:var(--color-foreground)] transition-colors duration-300"
+            className="
+      text-sm text-gray-500 hover:text-[color:var(--color-foreground)]
+      transition-colors duration-300
+      md:ml-auto
+    "
           >
             {t("featured.more")}
           </Link>

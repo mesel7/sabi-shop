@@ -10,7 +10,8 @@ import { useAuth } from "./AuthProvider";
 import { useState } from "react";
 import AuthModal from "./AuthModal";
 import { useIsClient } from "@/hooks/useIsClient";
-import { Menu, X, ArrowRight, Globe } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   const tNav = useTranslations("nav");
@@ -40,17 +41,24 @@ export default function Header() {
     <>
       {/* 상단 헤더 */}
       <header className="fixed top-0 inset-x-0 z-50 bg-[color:var(--color-background)]">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between relative">
+        <div className="px-4 h-16 flex items-center justify-between relative">
           <Link
             href={`/${locale}`}
             onClick={closeMobile}
             className="
               absolute left-1/2 -translate-x-1/2
               md:static md:translate-x-0
-              font-outfit text-lg font-bold
+              flex items-center justify-center
             "
           >
-            SABI SHOP
+            <Image
+              src="/logo192.png"
+              alt="SABI SHOP"
+              width={32}
+              height={32}
+              className="w-8 h-8"
+              priority
+            />
           </Link>
 
           {/* 데스크탑 메뉴 */}
@@ -75,13 +83,13 @@ export default function Header() {
 
             <Link
               href={`/${locale}/cart`}
-              className="flex items-center gap-2 hover:opacity-50 transition-opacity duration-300 cursor-pointer"
+              className="flex items-center gap-1 hover:opacity-50 transition-opacity duration-300 cursor-pointer"
             >
               {tNav("cart")}
               {isClient && count > 0 && (
                 <span
                   className="
-                    ml-1 text-[0.625rem]
+                    text-[0.625rem]
                     bg-[color:var(--color-foreground)] text-white
                     w-4 h-4 flex items-center justify-center
                     rounded-full font-outfit
@@ -116,9 +124,8 @@ export default function Header() {
               </button>
             )}
 
-            <div className="flex items-center gap-2 hover:opacity-50 transition-opacity duration-300 cursor-pointer">
-              <Globe className="w-5 h-5" />
-              <LocaleSwitcher />
+            <div className="flex items-center gap-2">
+              <LocaleSwitcher variant="desktop" />
             </div>
           </nav>
 
@@ -222,9 +229,8 @@ export default function Header() {
               )}
 
               {/* 언어 */}
-              <div className="flex items-center gap-2 py-4 hover:opacity-50 transition-opacity duration-300 cursor-pointer">
-                <Globe className="w-5 h-5" />
-                <LocaleSwitcher />
+              <div className="flex items-center gap-2 py-4">
+                <LocaleSwitcher variant="mobile" />
               </div>
             </div>
           </div>

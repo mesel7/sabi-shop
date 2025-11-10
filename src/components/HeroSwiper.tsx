@@ -5,14 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const SLIDES = [
-  { src: "/images/home/hero/coffee1.jpg", alt: "Coffee1" },
-  { src: "/images/home/hero/coffee2.jpg", alt: "Coffee2" },
-  { src: "/images/home/hero/coffee3.jpg", alt: "Coffee3" },
-  { src: "/images/home/hero/coffee4.jpg", alt: "Coffee4" },
-  { src: "/images/home/hero/coffee5.jpg", alt: "Coffee5" },
-  { src: "/images/home/hero/coffee6.jpg", alt: "Coffee6" },
+  { src: "/images/home/hero/slide1.jpg", alt: "Slide1" },
+  { src: "/images/home/hero/slide2.jpg", alt: "Slide2" },
+  { src: "/images/home/hero/slide3.jpg", alt: "Slide3" },
+  { src: "/images/home/hero/slide4.jpg", alt: "Slide4" },
 ];
 
 export default function HeroSwiper() {
@@ -27,20 +26,7 @@ export default function HeroSwiper() {
                      text-white/90 hover:text-white transition-colors duration-300
                      select-none cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7 md:w-8 md:h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.7}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 19 8 12l7-7"
-            />
-          </svg>
+          <ChevronLeft className="w-7 h-7 stroke-[1.7]" />
         </button>
 
         {/* Next */}
@@ -50,20 +36,7 @@ export default function HeroSwiper() {
                      text-white/90 hover:text-white transition-colors duration-300
                      select-none cursor-pointer"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-7 h-7 md:w-8 md:h-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.7}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m9 5 7 7-7 7"
-            />
-          </svg>
+          <ChevronRight className="w-7 h-7 stroke-[1.7]" />
         </button>
 
         <Swiper
@@ -104,15 +77,7 @@ export default function HeroSwiper() {
                   fill
                   priority={i === 0}
                   sizes="(min-width:1280px) 960px, 75vw"
-                  className="
-                    object-cover
-                    brightness-[0.95] contrast-[1.05] saturate-[0.9]
-                    grayscale-[60%]
-                    group-hover:grayscale-0
-                    group-hover:brightness-100
-                    group-hover:saturate-100
-                    transition-all duration-300
-                  "
+                  className="object-cover"
                 />
               </div>
             </SwiperSlide>
