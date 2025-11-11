@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# <img width="64" height="64" alt="logo192" src="https://github.com/user-attachments/assets/c393121a-5bb1-4012-973d-4802404d010c" /> SABI SHOP - WABI SABI Minimal Coffee Shop
 
-## Getting Started
+자세한 설명과 기술 정보는 각 언어로 준비된 페이지에서 확인하실 수 있습니다.  
+詳しい説明や技術情報は、各言語で用意されたページにてご確認いただけます。
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📚 언어 선택 / 言語を選択
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🇰🇷 [한국어](./README.ko.md)  
+🇯🇵 [日本語](./README.ja.md)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📎 기타 정보 / その他の情報
 
-## Learn More
+**🧩 프로젝트 링크 / プロジェクトリンク**  
+[`https://sabi-shop.vercel.app`](https://sabi-shop.vercel.app)
 
-To learn more about Next.js, take a look at the following resources:
+**🌐 포트폴리오 사이트 / ポートフォリオサイト**  
+[`https://mesel7.dev/projects/sabi-shop`](https://mesel7.dev/projects/sabi-shop)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**✉️ 문의 / お問い合わせ**  
+cejhans1520@gmail.com
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**📄 라이선스 / ライセンス**  
+[MIT License](./LICENSE)
