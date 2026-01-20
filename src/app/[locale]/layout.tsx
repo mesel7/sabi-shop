@@ -82,15 +82,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       className={`${notoJP.variable} ${notoKR.variable} ${outfit.variable}`}
     >
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AppProviders>
-            <div className="min-h-dvh flex flex-col">
-              <Header />
-              {children}
-              <Footer />
-            </div>
-          </AppProviders>
-        </NextIntlClientProvider>
+        <AppProviders locale={locale} messages={messages}>
+          <div className="min-h-dvh flex flex-col">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </AppProviders>
       </body>
     </html>
   );

@@ -1,13 +1,24 @@
 "use client";
-import { Provider } from "react-redux";
-import { store } from "@/store";
-import { ReactNode } from "react";
-import { AuthProvider } from "@/lib/auth/AuthProvider";
 
-export default function AppProviders({ children }: { children: ReactNode }) {
+import { ReactNode } from "react";
+
+import { NextIntlClientProvider } from "next-intl";
+import { Provider } from "react-redux";
+import { AuthProvider } from "@/lib/auth/AuthProvider";
+import { store } from "@/store";
+
+type Props = {
+  children: ReactNode;
+  locale: string;
+  messages: Record<string, any>;
+};
+
+export default function AppProviders({ children, locale, messages }: Props) {
   return (
-    <Provider store={store}>
-      <AuthProvider>{children}</AuthProvider>
-    </Provider>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <Provider store={store}>
+        <AuthProvider>{children}</AuthProvider>
+      </Provider>
+    </NextIntlClientProvider>
   );
 }

@@ -62,7 +62,7 @@ export default function MobileMenu({
               {mainMenu.map((m) => (
                 <Link
                   key={m.id}
-                  href={`/${m.path}`}
+                  href={`${m.path}`}
                   onClick={closeMobile}
                   className="font-outfit flex items-center justify-between py-4 text-base hover:opacity-50 transition-opacity duration-300 cursor-pointer"
                 >
