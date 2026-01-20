@@ -1,13 +1,13 @@
-// src/app/[locale]/layout.tsx
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-import Providers from "@/components/Providers";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import AppProviders from "@/shared/providers/AppProviders";
+import Header from "@/features/layout/header";
+import Footer from "@/features/layout/footer";
 
 import { Noto_Sans_JP, Noto_Sans_KR, Outfit } from "next/font/google";
 import type { Metadata, Viewport } from "next";
+import { setRequestLocale } from "next-intl/server";
 
 const locales = ["ko", "ja"] as const;
 
@@ -70,6 +70,8 @@ export default async function LocaleLayout({ children, params }: Props) {
     notFound();
   }
 
+  setRequestLocale(locale);
+
   const messages = (await import(`../../../messages/${locale}.json`))
     .default as Record<string, any>;
 
@@ -81,13 +83,13 @@ export default async function LocaleLayout({ children, params }: Props) {
     >
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>
+          <AppProviders>
             <div className="min-h-dvh flex flex-col">
               <Header />
-              <main className="flex-1 pt-16">{children}</main>
+              {children}
               <Footer />
             </div>
-          </Providers>
+          </AppProviders>
         </NextIntlClientProvider>
       </body>
     </html>

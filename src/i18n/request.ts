@@ -1,10 +1,18 @@
 import { getRequestConfig } from "next-intl/server";
 
-export default getRequestConfig(async ({ locale }) => {
-  const current = (locale ?? "ko") as "ko" | "ja";
-  const messages = (await import(`../../messages/${current}.json`)).default;
+const SUPPORTED_LOCALES = ["ko", "ja"] as const;
+type Locale = (typeof SUPPORTED_LOCALES)[number];
+
+export default getRequestConfig(async ({ requestLocale }) => {
+  const raw = (await requestLocale) ?? "ko";
+  const locale: Locale = SUPPORTED_LOCALES.includes(raw as Locale)
+    ? (raw as Locale)
+    : "ko";
+
+  const messages = (await import(`../../messages/${locale}.json`)).default;
+
   return {
-    locale: current,
+    locale,
     messages,
   };
 });

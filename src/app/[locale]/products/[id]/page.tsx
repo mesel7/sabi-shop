@@ -1,62 +1,14 @@
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { PRODUCTS } from "@/site/products.mock";
-import ProductDetailClient from "./ProductDetailClient";
-import { getTranslations } from "next-intl/server";
+import ProductDetailPage from "@/features/product-detail";
 
 type Props = {
-  params: Promise<{ locale: "ko" | "ja"; id: string }>;
+  params: Promise<{ id: string }>;
 };
 
-export default async function ProductDetail({ params }: Props) {
-  const { id, locale } = await params;
-
-  const tProductDetail = await getTranslations({
-    locale,
-    namespace: "productDetail",
-  });
-
-  const p = PRODUCTS.find((x) => x.id === id && x.isActive);
-  if (!p) notFound();
-
-  const title = locale === "ja" ? p.title_ja : p.title_ko;
-  const desc = locale === "ja" ? p.description_ja : p.description_ko;
-
+export default async function Page({ params }: Props) {
+  const { id } = await params;
   return (
-    <section className="max-w-4xl mx-auto px-4 py-10">
-      <div className="grid md:grid-cols-2 gap-10">
-        <div className="relative aspect-square bg-gray-100">
-          {/* LCP 최적화: 이미지 하나, 뷰포트 상단에 렌더이기 때문에 priority */}
-          <Image
-            src={p.imageUrl}
-            alt={title}
-            width={1024}
-            height={1024}
-            className="w-full h-full object-contain"
-            priority
-          />
-        </div>
-
-        <ProductDetailClient
-          locale={locale}
-          p={{
-            id: p.id,
-            price: p.price,
-            imageUrl: p.imageUrl,
-            title_ko: p.title_ko,
-            title_ja: p.title_ja,
-          }}
-          desc={desc}
-        />
-      </div>
-
-      <hr className="my-10 text-gray-200" />
-      <div className="prose max-w-none text-sm text-gray-700">
-        <h2 className="text-base font-semibold mb-2">
-          {tProductDetail("detailTitle")}
-        </h2>
-        <p>{desc ?? tProductDetail("emptyDescription")}</p>
-      </div>
-    </section>
+    <main className="flex-1 pt-16">
+      <ProductDetailPage id={id} />
+    </main>
   );
 }
